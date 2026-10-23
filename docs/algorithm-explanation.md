@@ -359,3 +359,7 @@ Answer: Not complete in general infinite graphs; complete in finite state spaces
 
 #### Viva Q4: How does GBFS differ from A*?
 Answer: A* uses f(n) = g(n) + h(n), while GBFS uses f(n) = h(n) purely.
+
+
+#### Viva Q5: Why is deterministic tie-breaking essential in GBFS?
+Answer: FIFO tie-breaking guarantees reproducible, deterministic search trajectories when nodes share equal heuristic values.

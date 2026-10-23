@@ -235,3 +235,6 @@ Both h1 and h2 strictly satisfy h(n) <= h*(n).
 
 ### Dominance Relationship
 Manhattan Distance strictly dominates Misplaced Tiles: h2(n) >= h1(n).
+
+### Algorithmic Complexity
+Time: O(b^m) | Space: O(b^m) | Branching factor: b <= 4.

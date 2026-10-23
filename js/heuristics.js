@@ -243,3 +243,5 @@ export default {
 /** JSDoc: Heuristic function mathematical contracts */
 
 export function calculateInformativenessRatio(h1, h2) { return h1 === 0 ? 1 : h2 / h1; }
+
+/** Validate input parameters for getTileBreakdown */

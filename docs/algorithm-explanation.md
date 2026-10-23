@@ -383,3 +383,7 @@ Answer: By computing inversion count parity. A state is solvable iff its inversi
 
 #### Viva Q10: What is the space complexity of GBFS?
 Answer: O(b^m), where b is branching factor and m is maximum search depth, as the entire frontier is stored in memory.
+
+
+#### Viva Q11: What is worst-case time complexity of GBFS?
+Answer: O(b^m) in the worst case, though average performance is substantially better with informed heuristics.

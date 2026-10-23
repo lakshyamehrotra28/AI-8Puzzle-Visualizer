@@ -205,3 +205,6 @@ For faculty viva and video demonstration:
 
 ### System Architecture
 The visualizer uses a decoupled MVC architecture separating search logic from rendering.
+
+### Data Flow Pipeline
+Inputs -> Solvability Validator -> Heuristic Estimator -> Min-Heap Priority Queue -> State Visualizer.

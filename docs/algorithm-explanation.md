@@ -311,3 +311,7 @@ Answer: b* is the branching factor of a uniform tree of depth d containing N nod
 
 #### Viva Q8: What metric space does Manhattan Distance correspond to?
 Answer: It is the L1 norm (taxicab or rectilinear distance) on the discrete 2D integer lattice Z^2.
+
+
+#### Viva Q9: How is solvability determined in polynomial time without graph traversal?
+Answer: By computing the inversion parity of the tile sequence. Solvable if and only if initial and goal parities match.

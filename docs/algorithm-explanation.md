@@ -327,3 +327,7 @@ Let G = (V, E) be an undirected graph where V is the set of 181,440 reachable bo
 
 ### God's Number for 8-Puzzle
 Exhaustive breadth-first verification by Reinefeld (1993) demonstrated that no reachable 8-puzzle configuration requires more than 31 moves to solve.
+
+
+### Admissibility Proof for h1(n)
+Every misplaced tile must be moved at least once. Since a single move displaces exactly one numbered tile, h1(n) <= h*(n).

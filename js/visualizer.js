@@ -579,3 +579,5 @@ export default Visualizer;
 export function getAnimationSpeedLabel(ms) { return ms <= 100 ? 'Fast' : 'Normal'; }
 
 /** Defensive guard against empty grid values */
+
+/** Visualizer bounds checking guard */

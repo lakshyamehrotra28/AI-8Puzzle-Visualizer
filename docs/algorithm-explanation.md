@@ -303,3 +303,7 @@ Answer: When multiple frontier nodes share the same h(n), tie-breaking decides e
 
 #### Viva Q6: Why is the blank tile excluded from heuristic calculations?
 Answer: The blank tile does not represent a physical tile to be moved; moving any tile implicitly moves the blank. Counting the blank would double-count moves and violate admissibility.
+
+
+#### Viva Q7: What is the Effective Branching Factor b*?
+Answer: b* is the branching factor of a uniform tree of depth d containing N nodes, satisfying N = sum_{i=0}^d (b*)^i.

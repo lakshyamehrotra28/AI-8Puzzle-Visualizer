@@ -283,3 +283,7 @@ A heuristic h is consistent if h(n) <= c(n, a, n') + h(n'). In the 8-puzzle, c(n
 
 #### Viva Q1: What is the total size of the 8-puzzle state space?
 Answer: 9! = 362,880 total configurations, partitioned into two disjoint equivalence classes of 181,440 states each.
+
+
+#### Viva Q2: Why is Greedy Best-First Search not guaranteed to find an optimal solution?
+Answer: GBFS evaluates states using f(n) = h(n) and ignores path cost g(n). It can greedily chase a state with low heuristic value even if the path taken to reach it is long or circuitous.

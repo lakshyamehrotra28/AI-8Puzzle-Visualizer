@@ -112,13 +112,22 @@ function getSuccessors(tiles) {
   return succs;
 }
 
+function misplacedTiles(tiles, goalTiles) {
+  let count = 0;
+  for (let i = 0; i < tiles.length; i++) {
+    if (tiles[i] !== BLANK_TILE && tiles[i] !== goalTiles[i]) count++;
+  }
+  return count;
+}
+
 // --- GBFS ---
-function runGBFS(initialTiles, goalTiles, maxNodes = 10000) {
+function runGBFS(initialTiles, goalTiles, maxNodes = 10000, heuristicType = 'manhattan') {
   const goalMap = buildGoalMap(goalTiles);
-  const rootH   = manhattanDistance(initialTiles, goalMap);
+  const calcH = (t) => heuristicType === 'misplaced' ? misplacedTiles(t, goalTiles) : manhattanDistance(t, goalMap);
+  const rootH   = calcH(initialTiles);
 
   if (initialTiles.join(',') === goalTiles.join(',')) {
-    return { found: true, path: [{ tiles: initialTiles, parent: null, move: 'START', depth: 0, h: 0 }], nodesGenerated: 1, nodesExpanded: 0 };
+    return { found: true, path: [{ tiles: initialTiles, parent: null, move: 'START', depth: 0, h: 0, f: 0 }], nodesGenerated: 1, nodesExpanded: 0 };
   }
 
   const frontier = new PriorityQueue();
@@ -126,7 +135,7 @@ function runGBFS(initialTiles, goalTiles, maxNodes = 10000) {
   const explored  = new Set();
   let nodesGenerated = 1, nodesExpanded = 0;
 
-  const root = { tiles: initialTiles, parent: null, move: 'START', depth: 0, h: rootH };
+  const root = { tiles: initialTiles, parent: null, move: 'START', depth: 0, h: rootH, f: rootH };
   frontier.push(rootH, root);
   frontierSet.add(initialTiles.join(','));
 
@@ -150,8 +159,8 @@ function runGBFS(initialTiles, goalTiles, maxNodes = 10000) {
     for (const { tiles: st, move } of getSuccessors(node.tiles)) {
       const sk = st.join(',');
       if (explored.has(sk) || frontierSet.has(sk)) continue;
-      const h = manhattanDistance(st, goalMap);
-      const succNode = { tiles: st, parent: node, move, depth: node.depth + 1, h };
+      const h = calcH(st);
+      const succNode = { tiles: st, parent: node, move, depth: node.depth + 1, h, f: h };
       frontier.push(h, succNode);
       frontierSet.add(sk);
       nodesGenerated++;
@@ -362,6 +371,49 @@ test('gbfs: h values decrease (or stay equal) along solution path for GBFS', () 
   assert(r.found, 'Should find solution');
   const last = r.path[r.path.length-1];
   assertEqual(last.h, 0, 'Goal node should have h=0');
+});
+
+test('gbfs: works correctly with Misplaced Tiles heuristic (h1)', () => {
+  const initial = [1,2,3,4,0,5,7,8,6];
+  const r = runGBFS(initial, STANDARD_GOAL, 10000, 'misplaced');
+  assert(r.found, 'Should find solution using Misplaced Tiles heuristic');
+  assertEqual(r.path[r.path.length - 1].tiles.join(','), STANDARD_GOAL.join(','), 'Final path node must be goal');
+});
+
+test('gbfs: evaluation function f(n) strictly equals h(n) without g(n)', () => {
+  const initial = [1,2,3,4,0,5,7,8,6];
+  const r = runGBFS(initial, STANDARD_GOAL);
+  assert(r.found, 'Should find solution');
+  for (const node of r.path) {
+    assertEqual(node.f, node.h, `f (${node.f}) must equal h (${node.h})`);
+  }
+});
+
+test('pq: 200 random priority elements maintain strict min-heap order', () => {
+  const pq = new PriorityQueue();
+  const arr = [];
+  for (let i = 0; i < 200; i++) {
+    const p = Math.floor(Math.random() * 5000);
+    pq.push(p, p);
+    arr.push(p);
+  }
+  arr.sort((a, b) => a - b);
+  for (let i = 0; i < 200; i++) {
+    assertEqual(pq.pop(), arr[i], `Popped item at index ${i} must match sorted order`);
+  }
+  assert(pq.isEmpty, 'Queue must be empty after popping all elements');
+});
+
+test('pq: tie-breaking is strictly FIFO across identical priorities', () => {
+  const pq = new PriorityQueue();
+  pq.push(5, 'order_1');
+  pq.push(5, 'order_2');
+  pq.push(5, 'order_3');
+  pq.push(5, 'order_4');
+  assertEqual(pq.pop(), 'order_1', 'First inserted must be first dequeued');
+  assertEqual(pq.pop(), 'order_2', 'Second inserted must be second dequeued');
+  assertEqual(pq.pop(), 'order_3', 'Third inserted must be third dequeued');
+  assertEqual(pq.pop(), 'order_4', 'Fourth inserted must be fourth dequeued');
 });
 
 // ══════════════════════════════════════════════════════════════

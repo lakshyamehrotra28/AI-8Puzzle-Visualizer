@@ -712,3 +712,5 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
 
 @keyframes pulseGoal { 0%, 100% { opacity: 1; } 50% { opacity: 0.8; } }
 .goal-glow { animation: pulseGoal 2s infinite ease-in-out; }
+
+@media (max-width: 640px) { h1 { font-size: 1.75rem !important; } }

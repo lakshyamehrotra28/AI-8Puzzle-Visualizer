@@ -19,6 +19,7 @@ An interactive, high-performance web dashboard and visualizer for solving the cl
 - **Project Title:** `AI-8Puzzle-Visualizer`
 - **GitHub Repository:** [https://github.com/lakshyamehrotra28/AI-8Puzzle-Visualizer](https://github.com/lakshyamehrotra28/AI-8Puzzle-Visualizer)
 - **GitHub Pages Live Deployment:** [https://lakshyamehrotra28.github.io/AI-8Puzzle-Visualizer/](https://lakshyamehrotra28.github.io/AI-8Puzzle-Visualizer/)
+- **Firebase Hosting Live Deployment:** [https://ai-8puzzle-24bci0212.web.app/](https://ai-8puzzle-24bci0212.web.app/)
 
 ---
 

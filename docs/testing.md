@@ -183,3 +183,5 @@ All 64 tests execute in under 200 milliseconds and require zero external depende
 - Spec: |h(n) - h(n')| <= 1 for all valid adjacent transitions.
 
 - Spec: Priority queue pop() must strictly return element with minimum priority.
+
+- Spec: Items with equal priority must be dequeued in original insertion order.

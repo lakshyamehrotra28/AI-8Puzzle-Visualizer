@@ -379,3 +379,7 @@ Answer: The L1 norm on the discrete 2D integer grid Z^2.
 
 #### Viva Q9: How can solvability be tested in O(N^2) time?
 Answer: By computing inversion count parity. A state is solvable iff its inversion parity matches the target goal's parity.
+
+
+#### Viva Q10: What is the space complexity of GBFS?
+Answer: O(b^m), where b is branching factor and m is maximum search depth, as the entire frontier is stored in memory.

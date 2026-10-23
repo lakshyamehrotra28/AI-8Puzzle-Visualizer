@@ -291,3 +291,7 @@ Answer: GBFS evaluates states using f(n) = h(n) and ignores path cost g(n). It c
 
 #### Viva Q3: Under what conditions can GBFS fail to terminate in infinite spaces?
 Answer: Without repeated-state checking, GBFS can enter infinite loops or follow an infinite dead-end path with misleadingly low heuristic estimates.
+
+
+#### Viva Q4: How does GBFS differ mathematically from A* Search?
+Answer: A* uses f(n) = g(n) + h(n), balancing cost accumulated with cost remaining. GBFS uses f(n) = h(n) solely.

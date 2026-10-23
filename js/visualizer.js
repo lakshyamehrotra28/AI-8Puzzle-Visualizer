@@ -111,6 +111,22 @@ export class Visualizer {
     this._renderStep(clamped);
   }
 
+  /** Jump directly to initial start step */
+  jumpToStart() {
+    if (this._history.length > 0) {
+      this.pause();
+      this.jumpToStep(0);
+    }
+  }
+
+  /** Jump directly to terminal goal step */
+  jumpToEnd() {
+    if (this._history.length > 0) {
+      this.pause();
+      this.jumpToStep(this._history.length - 1);
+    }
+  }
+
   /** Stop playback and reset */
   stop() {
     this.pause();

@@ -53,9 +53,10 @@ import { computeHeuristic, HEURISTIC, buildGoalPositionMap } from './heuristics.
 
 // ── Configuration ──────────────────────────────────────────
 const DEFAULT_CONFIG = {
-  maxNodes:        100000,  // Prevent runaway search
-  maxDepth:        500,     // Maximum search depth
-  heuristic:       HEURISTIC.MANHATTAN,
+  maxNodes:            100000,  // Prevent runaway search
+  maxDepth:            500,     // Maximum search depth
+  heuristic:           HEURISTIC.MANHATTAN,
+  recordHistoryLimit:  5000,    // Max history frames to capture for playback
 };
 
 // ── Priority Queue (Min-Heap) ──────────────────────────────
@@ -356,19 +357,21 @@ export function runGBFS(initialTiles, goalTiles, options = {}) {
       nodesGenerated++;
 
       // Record generation event
-      history.push({
-        type:         'generate',
-        node:         succNode,
-        boardState:   [...succBoard.tiles],
-        parentState:  [...currentNode.board.tiles],
-        move,
-        movedTile,
-        hValue:       hVal,
-        fValue:       hVal,
-        depth:        succNode.depth,
-        nodesGenerated,
-        nodesExpanded,
-      });
+      if (history.length < config.recordHistoryLimit) {
+        history.push({
+          type:         'generate',
+          node:         succNode,
+          boardState:   [...succBoard.tiles],
+          parentState:  [...currentNode.board.tiles],
+          move,
+          movedTile,
+          hValue:       hVal,
+          fValue:       hVal,
+          depth:        succNode.depth,
+          nodesGenerated,
+          nodesExpanded,
+        });
+      }
     }
   }
 

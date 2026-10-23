@@ -411,3 +411,7 @@ Answer: An enhancement to Manhattan Distance that adds 2 moves for every pair of
 
 #### Viva Q17: What role does the Closed List (Explored Set) serve?
 Answer: It records expanded state signatures, preventing the algorithm from revisiting previously expanded states and getting trapped in cycles.
+
+
+#### Viva Q18: Why use a Binary Min-Heap for the Open List?
+Answer: It provides O(log N) insertion and O(log N) extract-min operations, ensuring rapid node retrieval.

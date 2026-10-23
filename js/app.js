@@ -64,7 +64,7 @@ let viz = null;
 // INITIALIZATION
 // ══════════════════════════════════════════════════════════
 
-document.addEventListener('DOMContentLoaded', () => {
+function init() {
   cacheElements();
   setupNavigation();
   setupSidebar();
@@ -74,7 +74,13 @@ document.addEventListener('DOMContentLoaded', () => {
   populateAlgorithmPage();
   populateComparisonTable();
   navigateTo('home');
-});
+}
+
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
 
 function cacheElements() {
   // Navigation

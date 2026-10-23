@@ -1231,6 +1231,37 @@ AI-8Puzzle-Visualizer/
       });
     });
 
+    // Page Navigation delegation
+    document.addEventListener('click', function(e) {
+      const navItem = e.target.closest('[data-page]');
+      if (!navItem) return;
+      const pageId = navItem.dataset.page;
+      if (!pageId) return;
+
+      document.querySelectorAll('[data-page]').forEach(el => el.classList.toggle('active', el.dataset.page === pageId));
+      document.querySelectorAll('.page-section').forEach(sec => sec.classList.toggle('active', sec.id === `page-${pageId}`));
+
+      const titles = {
+        'home': 'Home — Introduction',
+        'solver': 'Puzzle Solver',
+        'visualization': 'Search Visualization',
+        'comparison': 'Performance Comparison',
+        'algorithm': 'Algorithm Information',
+        'about': 'About the Project',
+      };
+      const headerTitle = document.getElementById('header-title');
+      if (headerTitle) headerTitle.textContent = titles[pageId] || 'AI-8Puzzle-Visualizer';
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('sidebar-overlay');
+      if (sidebar && window.innerWidth < 900) {
+        sidebar.classList.remove('open');
+        overlay?.classList.remove('show');
+      }
+    });
+
     // Quick solve button nav
     document.getElementById('btn-quick-solve')?.addEventListener('click', function() {
       document.querySelector('[data-page="solver"]')?.click();

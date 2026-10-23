@@ -486,3 +486,5 @@ export default {
   estimateMemory,
   getGBFSProperties,
 };
+
+/** JSDoc: MinHeap priority queue formal complexity */

@@ -347,3 +347,7 @@ Since unit cost c = 1 and any legal move changes Manhattan distance by at most 1
 
 #### Viva Q1: What is the total size of the 8-puzzle state space?
 Answer: 9! = 362,880 total permutations, with exactly half (181,440) reachable from the standard goal.
+
+
+#### Viva Q2: Is Greedy Best-First Search optimal?
+Answer: No. Because GBFS considers only f(n) = h(n) and ignores path cost g(n), it may discover a longer path.

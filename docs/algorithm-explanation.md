@@ -375,3 +375,7 @@ Answer: It is the branching factor of a uniform tree of depth d containing N nod
 
 #### Viva Q8: What metric space does Manhattan Distance represent?
 Answer: The L1 norm on the discrete 2D integer grid Z^2.
+
+
+#### Viva Q9: How can solvability be tested in O(N^2) time?
+Answer: By computing inversion count parity. A state is solvable iff its inversion parity matches the target goal's parity.

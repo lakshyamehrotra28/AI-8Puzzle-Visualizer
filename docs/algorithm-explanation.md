@@ -319,3 +319,7 @@ Answer: By computing the inversion parity of the tile sequence. Solvable if and 
 
 #### Viva Q10: What is the space complexity of GBFS and why is it problematic?
 Answer: O(b^m). GBFS keeps all generated nodes in the frontier/explored set, which can exhaust RAM on deep searches.
+
+
+### Graph-Theoretic State Space Formulation
+Let G = (V, E) be an undirected graph where V is the set of 181,440 reachable board states and E is the set of valid tile slide transitions.

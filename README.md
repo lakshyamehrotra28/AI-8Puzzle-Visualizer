@@ -208,3 +208,6 @@ The visualizer uses a decoupled MVC architecture separating search logic from re
 
 ### Data Flow Pipeline
 Inputs -> Solvability Validator -> Heuristic Estimator -> Min-Heap Priority Queue -> State Visualizer.
+
+### Browser Compatibility
+Tested on Chrome 120+, Firefox 122+, Safari 17+, Edge 120+.

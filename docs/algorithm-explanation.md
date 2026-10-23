@@ -407,3 +407,7 @@ Answer: DFS can explore arbitrarily deep wrong branches; GBFS is guided toward t
 
 #### Viva Q16: What is the Linear Conflict heuristic?
 Answer: An enhancement to Manhattan Distance that adds 2 moves for every pair of tiles in their goal row/column but inverted.
+
+
+#### Viva Q17: What role does the Closed List (Explored Set) serve?
+Answer: It records expanded state signatures, preventing the algorithm from revisiting previously expanded states and getting trapped in cycles.

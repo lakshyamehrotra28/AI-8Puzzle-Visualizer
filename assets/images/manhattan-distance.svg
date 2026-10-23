@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 450" width="100%" height="100%">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="100%" stop-color="#141a2e"/>
+    </linearGradient>
+    <linearGradient id="tileGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="targetGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="800" height="450" rx="16" fill="url(#bgGrad)"/>
+  <rect x="2" y="2" width="796" height="446" rx="14" fill="none" stroke="#25324e" stroke-width="1.5"/>
+
+  <!-- Title -->
+  <text x="400" y="48" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="22" font-weight="700" fill="#ffffff" text-anchor="middle">Manhattan Distance (L1 Metric) vs Misplaced Tiles</text>
+  <text x="400" y="74" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="13" fill="#8b9bb4" text-anchor="middle">h2(n) = Σ (|curr_row(t) - goal_row(t)| + |curr_col(t) - goal_col(t)|)</text>
+
+  <!-- 3x3 Grid Graphic -->
+  <g transform="translate(100, 110)">
+    <!-- Board Outline -->
+    <rect width="270" height="270" rx="12" fill="#131c30" stroke="#334155" stroke-width="2"/>
+    
+    <!-- Cells -->
+    <rect x="10" y="10" width="75" height="75" rx="8" fill="#1e293b"/>
+    <rect x="95" y="10" width="75" height="75" rx="8" fill="#1e293b"/>
+    <rect x="180" y="10" width="75" height="75" rx="8" fill="#1e293b"/>
+
+    <rect x="10" y="95" width="75" height="75" rx="8" fill="#1e293b"/>
+    <rect x="95" y="95" width="75" height="75" rx="8" fill="#1e293b"/>
+    <rect x="180" y="95" width="75" height="75" rx="8" fill="#1e293b"/>
+
+    <rect x="10" y="180" width="75" height="75" rx="8" fill="#1e293b"/>
+    <rect x="95" y="180" width="75" height="75" rx="8" fill="#1e293b"/>
+    <rect x="180" y="180" width="75" height="75" rx="8" fill="#1e293b"/>
+
+    <!-- Current Tile 5 Position at (0,0) -->
+    <rect x="10" y="10" width="75" height="75" rx="8" fill="url(#tileGrad)" stroke="#60a5fa" stroke-width="2"/>
+    <text x="47" y="55" font-family="sans-serif" font-size="28" font-weight="bold" fill="#ffffff" text-anchor="middle">5</text>
+    <text x="47" y="75" font-family="sans-serif" font-size="9" fill="#93c5fd" text-anchor="middle">Current (0,0)</text>
+
+    <!-- Goal Tile 5 Position at (1,1) -->
+    <rect x="95" y="95" width="75" height="75" rx="8" fill="url(#targetGrad)" stroke="#34d399" stroke-width="2"/>
+    <text x="132" y="140" font-family="sans-serif" font-size="28" font-weight="bold" fill="#ffffff" text-anchor="middle">5</text>
+    <text x="132" y="160" font-family="sans-serif" font-size="9" fill="#a7f3d0" text-anchor="middle">Goal (1,1)</text>
+
+    <!-- Manhattan path arrows -->
+    <!-- Horizontal step -->
+    <path d="M 85 47 L 132 47" stroke="#f59e0b" stroke-width="3" stroke-dasharray="4,4" marker-end="url(#arrow)"/>
+    <text x="108" y="40" font-family="sans-serif" font-size="11" font-weight="bold" fill="#fbbf24" text-anchor="middle">Δc = 1</text>
+    <!-- Vertical step -->
+    <path d="M 132 47 L 132 90" stroke="#f59e0b" stroke-width="3" stroke-dasharray="4,4"/>
+    <text x="155" y="73" font-family="sans-serif" font-size="11" font-weight="bold" fill="#fbbf24">Δr = 1</text>
+  </g>
+
+  <!-- Explanation Cards -->
+  <g transform="translate(420, 115)">
+    <!-- Comparison Card -->
+    <rect width="320" height="130" rx="10" fill="#141c2e" stroke="#1e293b" stroke-width="1.5"/>
+    <text x="20" y="32" font-family="sans-serif" font-size="15" font-weight="bold" fill="#38bdf8">Admissibility & Dominance Proof</text>
+    <text x="20" y="60" font-family="sans-serif" font-size="12" fill="#cbd5e1">• Each tile must move at least its Manhattan distance.</text>
+    <text x="20" y="82" font-family="sans-serif" font-size="12" fill="#cbd5e1">• Each move covers at most 1 grid unit (c = 1).</text>
+    <text x="20" y="104" font-family="sans-serif" font-size="12" fill="#10b981" font-weight="600">∴ h2(n) ≤ h*(n) (Admissible) and h2(n) ≥ h1(n) (Dominates)</text>
+  </g>
+
+  <g transform="translate(420, 260)">
+    <!-- Metrics Card -->
+    <rect width="320" height="120" rx="10" fill="#141c2e" stroke="#1e293b" stroke-width="1.5"/>
+    <text x="20" y="32" font-family="sans-serif" font-size="14" font-weight="bold" fill="#a78bfa">Example Tile 5 Calculation</text>
+    <text x="20" y="58" font-family="monospace" font-size="12" fill="#e2e8f0">current_pos = (row: 0, col: 0)</text>
+    <text x="20" y="78" font-family="monospace" font-size="12" fill="#e2e8f0">goal_pos    = (row: 1, col: 1)</text>
+    <text x="20" y="98" font-family="monospace" font-size="12" fill="#fbbf24" font-weight="bold">distance    = |0-1| + |0-1| = 1 + 1 = 2</text>
+  </g>
+</svg>

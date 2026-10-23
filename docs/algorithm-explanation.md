@@ -387,3 +387,7 @@ Answer: O(b^m), where b is branching factor and m is maximum search depth, as th
 
 #### Viva Q11: What is worst-case time complexity of GBFS?
 Answer: O(b^m) in the worst case, though average performance is substantially better with informed heuristics.
+
+
+#### Viva Q12: Define an admissible heuristic.
+Answer: A heuristic h(n) that never overestimates the true cost to reach the goal: 0 <= h(n) <= h*(n).

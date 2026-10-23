@@ -207,43 +207,78 @@ export function isSolvable(initial, goal) {
   return (initInv % 2) === (goalInv % 2);
 }
 
-// ── Random Puzzle Generation ───────────────────────────────
+// ── Preset Benchmark Puzzles ──────────────────────────────
+export const PRESET_PUZZLES = {
+  TRIVIAL: {
+    name: 'Trivial (1 Move)',
+    tiles: [1, 2, 3, 4, 5, 0, 7, 8, 6],
+    description: 'Requires exactly 1 move (slide 6 down into blank).'
+  },
+  EASY: {
+    name: 'Easy (3 Moves)',
+    tiles: [1, 2, 3, 4, 0, 5, 7, 8, 6],
+    description: 'Standard textbook example, solvable in 3 moves.'
+  },
+  MEDIUM: {
+    name: 'Medium (6 Moves)',
+    tiles: [1, 2, 3, 0, 4, 6, 7, 5, 8],
+    description: 'Moderate difficulty requiring 6 moves.'
+  },
+  HARD: {
+    name: 'Hard (12 Moves)',
+    tiles: [2, 8, 3, 1, 6, 4, 7, 0, 5],
+    description: 'Complex puzzle requiring 12-14 expansions.'
+  },
+  VERY_HARD: {
+    name: 'Very Hard (20+ Moves)',
+    tiles: [8, 6, 7, 2, 5, 4, 3, 0, 1],
+    description: 'Deep state-space path requiring over 20 moves.'
+  },
+  WORST_CASE: {
+    name: 'Challenging Frontier (28 Moves)',
+    tiles: [8, 7, 6, 5, 4, 3, 2, 1, 0],
+    description: 'Reversed board with 28 inversions, solvable.'
+  },
+  UNSOLVABLE: {
+    name: 'Unsolvable (Odd Inversions)',
+    tiles: [1, 2, 3, 4, 5, 6, 8, 7, 0],
+    description: 'Classic 14-15 swap analog (7 and 8 swapped) with odd parity.'
+  }
+};
 
 /**
  * Generate a random solvable initial state relative to the given goal.
- * Uses Fisher-Yates shuffle and checks solvability.
+ * Generates by taking random legal moves from the goal state,
+ * mathematically guaranteeing solvability by construction.
+ *
  * @param {number[]} goal - Goal board tiles
- * @param {number} maxAttempts
- * @returns {number[]} - Solvable shuffled board
+ * @param {number} numMoves - Number of random walks to perform (default 30)
+ * @returns {number[]} - Solvable scrambled board
  */
-export function generateRandomSolvable(goal = DEFAULT_GOAL, maxAttempts = 1000) {
-  const tiles = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+export function generateRandomSolvable(goal = DEFAULT_GOAL, numMoves = 30) {
+  let current = new PuzzleBoard(goal);
+  let lastMove = null;
+  const opposite = { 'UP': 'DOWN', 'DOWN': 'UP', 'LEFT': 'RIGHT', 'RIGHT': 'LEFT' };
 
-  for (let attempt = 0; attempt < maxAttempts; attempt++) {
-    // Fisher-Yates shuffle
-    const shuffled = [...tiles];
-    for (let i = shuffled.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
-    }
+  for (let step = 0; step < numMoves; step++) {
+    const succs = current.getSuccessors();
+    // Filter out immediate undo move to avoid trivial back-and-forth
+    const candidates = succs.filter(s => s.move !== opposite[lastMove]);
+    const chosen = candidates.length > 0
+      ? candidates[Math.floor(Math.random() * candidates.length)]
+      : succs[Math.floor(Math.random() * succs.length)];
 
-    // Don't return the goal state itself
-    if (shuffled.join(',') === goal.join(',')) continue;
-
-    // Check solvability
-    if (isSolvable(shuffled, goal)) {
-      return shuffled;
-    }
+    current = chosen.board;
+    lastMove = chosen.move;
   }
 
-  // Fallback: guaranteed solvable by flipping parity
-  const base = [...goal];
-  // Swap first two non-blank tiles to flip parity
-  let i = 0, j = 1;
-  while (base[i] === BLANK_TILE) i++;
-  while (base[j] === BLANK_TILE || j === i) j++;
-  [base[i], base[j]] = [base[j], base[i]];
-  return base;
+  // Ensure initial does not trivially equal goal
+  if (current.equals(new PuzzleBoard(goal))) {
+    const succs = current.getSuccessors();
+    current = succs[0].board;
+  }
+
+  return [...current.tiles];
 }
 
 // ── Utility Functions ──────────────────────────────────────

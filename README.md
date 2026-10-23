@@ -232,3 +232,6 @@ Fully responsive on iOS and Android devices with touch-friendly controls.
 
 ### Admissibility Guarantee
 Both h1 and h2 strictly satisfy h(n) <= h*(n).
+
+### Dominance Relationship
+Manhattan Distance strictly dominates Misplaced Tiles: h2(n) >= h1(n).

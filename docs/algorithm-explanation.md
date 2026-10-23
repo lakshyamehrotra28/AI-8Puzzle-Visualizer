@@ -295,3 +295,7 @@ Answer: Without repeated-state checking, GBFS can enter infinite loops or follow
 
 #### Viva Q4: How does GBFS differ mathematically from A* Search?
 Answer: A* uses f(n) = g(n) + h(n), balancing cost accumulated with cost remaining. GBFS uses f(n) = h(n) solely.
+
+
+#### Viva Q5: How does tie-breaking affect GBFS performance?
+Answer: When multiple frontier nodes share the same h(n), tie-breaking decides expansion order. FIFO ensures deterministic reproducibility.

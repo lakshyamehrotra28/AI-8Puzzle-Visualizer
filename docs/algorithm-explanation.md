@@ -255,3 +255,7 @@ For the 8-Puzzle with Manhattan Distance, GBFS typically expands far fewer nodes
 1. Russell, S. J., & Norvig, P. (2020). *Artificial Intelligence: A Modern Approach* (4th ed.). Pearson.
 2. Hart, P. E., Nilsson, N. J., & Raphael, B. (1968). A formal basis for the heuristic determination of minimum cost paths. *IEEE Transactions on Systems Science and Cybernetics*, 4(2), 100-107.
 3. Pohl, I. (1970). First results on the effect of error in heuristic search. *Machine Intelligence*, 5, 219-236.
+
+
+### Formal State Space Definition
+A state space graph G = (V, E) where vertices V are valid permutations of 0..8 and directed edges E represent valid transitions under blank sliding actions.

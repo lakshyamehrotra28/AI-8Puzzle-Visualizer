@@ -367,3 +367,7 @@ Answer: FIFO tie-breaking guarantees reproducible, deterministic search trajecto
 
 #### Viva Q6: Why exclude the blank tile from heuristic calculation?
 Answer: The blank is an empty slot; moving any numbered tile implicitly moves the blank. Including it causes double counting and violates admissibility.
+
+
+#### Viva Q7: What is the effective branching factor b*?
+Answer: It is the branching factor of a uniform tree of depth d containing N nodes: N = sum_{i=0}^d (b*)^i.

@@ -315,3 +315,7 @@ Answer: It is the L1 norm (taxicab or rectilinear distance) on the discrete 2D i
 
 #### Viva Q9: How is solvability determined in polynomial time without graph traversal?
 Answer: By computing the inversion parity of the tile sequence. Solvable if and only if initial and goal parities match.
+
+
+#### Viva Q10: What is the space complexity of GBFS and why is it problematic?
+Answer: O(b^m). GBFS keeps all generated nodes in the frontier/explored set, which can exhaust RAM on deep searches.

@@ -722,3 +722,5 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
 @media print { .sidebar, .control-panel { display: none !important; } }
 
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
+
+.puzzle-tile.in-place { border-color: #10b981 !important; }

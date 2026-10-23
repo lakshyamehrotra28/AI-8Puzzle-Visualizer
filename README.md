@@ -247,3 +247,6 @@ Deployed via automated GitHub Actions CI pipeline.
 
 ### Firebase Hosting Verification
 Live at https://ai-8puzzle-24bci0212.web.app.
+
+### Future Scope
+Support for 15-puzzle (4x4) and pattern database heuristics.

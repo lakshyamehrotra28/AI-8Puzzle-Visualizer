@@ -575,3 +575,5 @@ export function highlightInputGrid(containerId, validation) {
 export default Visualizer;
 
 /** JSDoc: Visualizer animation contracts */
+
+export function getAnimationSpeedLabel(ms) { return ms <= 100 ? 'Fast' : 'Normal'; }

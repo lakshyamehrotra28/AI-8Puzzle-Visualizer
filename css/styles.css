@@ -733,3 +733,5 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
 .heuristic-tag { display: inline-block; padding: 2px 8px; border-radius: 999px; font-size: 0.75rem; }
 
 .btn-preset:hover { border-color: #3b82f6; }
+
+.comparison-table tbody tr:hover { background: rgba(255,255,255,0.02); }

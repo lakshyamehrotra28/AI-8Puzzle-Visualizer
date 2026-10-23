@@ -403,3 +403,5 @@ export default {
 };
 
 /** JSDoc: Statistics calculation contracts */
+
+export function exportSummaryReportText(result) { return result ? result.message : ''; }

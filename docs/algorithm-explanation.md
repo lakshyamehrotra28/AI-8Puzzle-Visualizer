@@ -339,3 +339,7 @@ Each tile t must travel at least |r(t) - r_goal(t)| + |c(t) - c_goal(t)| moves. 
 
 ### Mathematical Dominance Theorem
 For any misplaced tile t, Manhattan distance is >= 1. Summing over all misplaced tiles proves h2(n) >= h1(n) for all states n.
+
+
+### Consistency (Monotonicity) Derivation
+Since unit cost c = 1 and any legal move changes Manhattan distance by at most 1, |h2(n) - h2(n')| <= 1 = c(n, a, n').

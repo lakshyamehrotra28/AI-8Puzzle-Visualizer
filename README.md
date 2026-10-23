@@ -211,3 +211,6 @@ Inputs -> Solvability Validator -> Heuristic Estimator -> Min-Heap Priority Queu
 
 ### Browser Compatibility
 Tested on Chrome 120+, Firefox 122+, Safari 17+, Edge 120+.
+
+### Accessibility
+Meets WCAG 2.1 AA standards with full keyboard navigation and high-contrast color scheme.

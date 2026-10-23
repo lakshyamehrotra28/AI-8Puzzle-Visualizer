@@ -427,3 +427,7 @@ Answer: Horizontal moves do not change relative tile order; vertical moves skip 
 
 #### Viva Q21: What is the branching factor range in 8-puzzle?
 Answer: Minimum 2 (corners), 3 (edges), maximum 4 (center). Average branching factor is approximately 2.67.
+
+
+#### Viva Q22: What occurs if initial state equals goal state?
+Answer: The algorithm identifies the match on initialization and immediately returns a path of length 1 without expanding nodes.

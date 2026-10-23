@@ -340,3 +340,5 @@ export function copyTiles(tiles) {
 export default PuzzleBoard;
 
 /** JSDoc: PuzzleBoard state inspection */
+
+PuzzleBoard.prototype.getManhattanEstimate = function(goal) { return 0; };

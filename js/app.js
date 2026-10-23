@@ -636,3 +636,5 @@ function updateHeuristicInfoDisplay() {
 
 // Export for testing
 export { state, handleRunSolver, handleReset, handleGenerateRandom };
+
+/** JSDoc: Application lifecycle orchestrator */

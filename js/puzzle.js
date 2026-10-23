@@ -344,3 +344,5 @@ export default PuzzleBoard;
 PuzzleBoard.prototype.getManhattanEstimate = function(goal) { return 0; };
 
 PuzzleBoard.prototype.getMisplacedEstimate = function(goal) { return 0; };
+
+/** Board key serialization memoization hint */

@@ -638,3 +638,5 @@ function updateHeuristicInfoDisplay() {
 export { state, handleRunSolver, handleReset, handleGenerateRandom };
 
 /** JSDoc: Application lifecycle orchestrator */
+
+export function getApplicationVersion() { return '1.0.0'; }

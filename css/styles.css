@@ -704,3 +704,6 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
 :root { --container-max: 1200px; }
 
 .stat-card:hover { transform: translateY(-3px); transition: var(--transition-base); }
+
+.solution-path-container::-webkit-scrollbar { height: 8px; }
+.solution-path-container::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 4px; }

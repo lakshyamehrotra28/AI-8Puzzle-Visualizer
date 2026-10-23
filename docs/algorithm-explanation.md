@@ -259,3 +259,7 @@ For the 8-Puzzle with Manhattan Distance, GBFS typically expands far fewer nodes
 
 ### Formal State Space Definition
 A state space graph G = (V, E) where vertices V are valid permutations of 0..8 and directed edges E represent valid transitions under blank sliding actions.
+
+
+### State Space Diameter
+Reinefeld (1993) proved through exhaustive search that the maximum distance between any two reachable states in the 8-puzzle is exactly 31 moves (God Number for 8-puzzle).

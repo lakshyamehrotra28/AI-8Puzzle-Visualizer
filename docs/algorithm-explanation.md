@@ -343,3 +343,7 @@ For any misplaced tile t, Manhattan distance is >= 1. Summing over all misplaced
 
 ### Consistency (Monotonicity) Derivation
 Since unit cost c = 1 and any legal move changes Manhattan distance by at most 1, |h2(n) - h2(n')| <= 1 = c(n, a, n').
+
+
+#### Viva Q1: What is the total size of the 8-puzzle state space?
+Answer: 9! = 362,880 total permutations, with exactly half (181,440) reachable from the standard goal.

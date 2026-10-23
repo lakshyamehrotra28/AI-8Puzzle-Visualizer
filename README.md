@@ -202,3 +202,6 @@ For faculty viva and video demonstration:
 2. **Nilsson, N. J. (2014).** *Principles of Artificial Intelligence*. Morgan Kaufmann.
 3. **Korf, R. E. (1985).** Depth-first iterative-deepening: An optimal admissible tree search. *Artificial Intelligence*, 27(1), 97-109.
 4. **Reinefeld, A. (1993).** Complete solution of the eight-puzzle and the benefit of node ordering in IDA*. *IJCAI-93*, 248-253.
+
+### System Architecture
+The visualizer uses a decoupled MVC architecture separating search logic from rendering.

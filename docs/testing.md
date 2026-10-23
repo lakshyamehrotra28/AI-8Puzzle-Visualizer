@@ -175,3 +175,5 @@ All 64 tests execute in under 200 milliseconds and require zero external depende
 - Spec: Each successor transition step cost is exactly 1.
 
 - Spec: h1(goal) must return 0.
+
+- Spec: h2(goal) must return 0.

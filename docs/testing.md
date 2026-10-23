@@ -181,3 +181,5 @@ All 64 tests execute in under 200 milliseconds and require zero external depende
 - Spec: h2(n) >= h1(n) for all valid state permutations n.
 
 - Spec: |h(n) - h(n')| <= 1 for all valid adjacent transitions.
+
+- Spec: Priority queue pop() must strictly return element with minimum priority.

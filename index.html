@@ -432,6 +432,7 @@ State Space: 9!/2 = 181,440 reachable states
                   <button class="btn btn-secondary btn-sm" onclick="loadPreset('medium')">🟡 Medium (8 moves)</button>
                   <button class="btn btn-secondary btn-sm" onclick="loadPreset('hard')">🔴 Hard (15+ moves)</button>
                   <button class="btn btn-secondary btn-sm" onclick="loadPreset('goal')">✅ Goal (already solved)</button>
+                  <button class="btn btn-secondary btn-sm" style="border-color:#ef4444;color:#f87171" onclick="loadPreset('unsolvable')">⚠️ Unsolvable (Parity Mismatch)</button>
                 </div>
               </div>
             </div>
@@ -1187,10 +1188,11 @@ AI-8Puzzle-Visualizer/
   <script>
     // Preset puzzle configurations
     const PRESETS = {
-      easy:   { initial: [1,2,3,4,5,6,7,0,8], goal: [1,2,3,4,5,6,7,8,0] },
-      medium: { initial: [2,8,3,1,6,4,7,0,5], goal: [1,2,3,8,0,4,7,6,5] },
-      hard:   { initial: [5,1,2,4,0,3,7,8,6], goal: [1,2,3,4,5,6,7,8,0] },
-      goal:   { initial: [1,2,3,4,5,6,7,8,0], goal: [1,2,3,4,5,6,7,8,0] },
+      easy:        { initial: [1,2,3,4,5,6,7,0,8], goal: [1,2,3,4,5,6,7,8,0] },
+      medium:      { initial: [2,8,3,1,6,4,7,0,5], goal: [1,2,3,8,0,4,7,6,5] },
+      hard:        { initial: [5,1,2,4,0,3,7,8,6], goal: [1,2,3,4,5,6,7,8,0] },
+      goal:        { initial: [1,2,3,4,5,6,7,8,0], goal: [1,2,3,4,5,6,7,8,0] },
+      unsolvable:  { initial: [1,2,3,4,5,6,8,7,0], goal: [1,2,3,4,5,6,7,8,0] },
     };
 
     function loadPreset(name) {
@@ -1209,7 +1211,7 @@ AI-8Puzzle-Visualizer/
       // Trigger apply
       setTimeout(() => document.getElementById('btn-apply-input')?.click(), 50);
 
-      const labels = { easy:'Easy', medium:'Medium', hard:'Hard', goal:'Goal State' };
+      const labels = { easy:'Easy', medium:'Medium', hard:'Hard', goal:'Goal State', unsolvable:'Unsolvable Parity Mismatch' };
       console.log(`Preset loaded: ${labels[name]}`);
     }
 

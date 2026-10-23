@@ -338,3 +338,5 @@ export function copyTiles(tiles) {
 }
 
 export default PuzzleBoard;
+
+/** JSDoc: PuzzleBoard state inspection */

@@ -268,9 +268,11 @@ function setupEventListeners() {
   el.btnRun?.addEventListener('click', handleRunSolver);
 
   // Playback controls
-  el.btnPause?.addEventListener('click',   () => viz?.togglePlay());
-  el.btnStepFwd?.addEventListener('click', () => viz?.stepForward());
-  el.btnStepBack?.addEventListener('click',() => viz?.stepBackward());
+  el.btnPause?.addEventListener('click',     () => viz?.togglePlay());
+  el.btnStepFwd?.addEventListener('click',   () => viz?.stepForward());
+  el.btnStepBack?.addEventListener('click',  () => viz?.stepBackward());
+  $('btn-step-start')?.addEventListener('click', () => viz?.jumpToStart());
+  $('btn-step-end')?.addEventListener('click',   () => viz?.jumpToEnd());
 
   // Reset
   el.btnReset?.addEventListener('click', handleReset);

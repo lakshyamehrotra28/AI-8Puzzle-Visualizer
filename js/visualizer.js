@@ -382,9 +382,11 @@ export class Visualizer {
     const atStart    = this._currentStep <= 0;
     const atEnd      = this._currentStep >= this._history.length - 1;
 
-    this._setDisabled('btn-play-pause', !hasHistory);
-    this._setDisabled('btn-step-back',  !hasHistory || atStart);
-    this._setDisabled('btn-step-fwd',   !hasHistory || atEnd);
+    this._setDisabled('btn-play-pause',  !hasHistory);
+    this._setDisabled('btn-step-start',  !hasHistory || atStart);
+    this._setDisabled('btn-step-back',   !hasHistory || atStart);
+    this._setDisabled('btn-step-fwd',    !hasHistory || atEnd);
+    this._setDisabled('btn-step-end',    !hasHistory || atEnd);
 
     const btnPlayPause = document.getElementById('btn-play-pause');
     if (btnPlayPause) {

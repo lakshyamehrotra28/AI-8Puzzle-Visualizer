@@ -735,3 +735,5 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
 .btn-preset:hover { border-color: #3b82f6; }
 
 .comparison-table tbody tr:hover { background: rgba(255,255,255,0.02); }
+
+.nav-item.active { border-left: 3px solid #4f8ef7; }

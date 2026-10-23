@@ -363,3 +363,7 @@ Answer: A* uses f(n) = g(n) + h(n), while GBFS uses f(n) = h(n) purely.
 
 #### Viva Q5: Why is deterministic tie-breaking essential in GBFS?
 Answer: FIFO tie-breaking guarantees reproducible, deterministic search trajectories when nodes share equal heuristic values.
+
+
+#### Viva Q6: Why exclude the blank tile from heuristic calculation?
+Answer: The blank is an empty slot; moving any numbered tile implicitly moves the blank. Including it causes double counting and violates admissibility.

@@ -707,3 +707,5 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
 
 .solution-path-container::-webkit-scrollbar { height: 8px; }
 .solution-path-container::-webkit-scrollbar-thumb { background: #3b82f6; border-radius: 4px; }
+
+:focus-visible { outline: 2px solid #4f8ef7; outline-offset: 2px; }

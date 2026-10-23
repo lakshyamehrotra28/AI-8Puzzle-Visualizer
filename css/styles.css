@@ -739,3 +739,5 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
 .nav-item.active { border-left: 3px solid #4f8ef7; }
 
 .info-val { font-variant-numeric: tabular-nums; }
+
+@media (max-width: 768px) { .solver-grid { grid-template-columns: 1fr !important; } }

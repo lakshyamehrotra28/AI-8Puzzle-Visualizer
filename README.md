@@ -217,3 +217,6 @@ Meets WCAG 2.1 AA standards with full keyboard navigation and high-contrast colo
 
 ### Benchmarking Methodology
 Measured across 50 test instances on Node.js v20 / V8 JavaScript engine.
+
+### Troubleshooting FAQ
+Common questions regarding solvability parity and browser caching.

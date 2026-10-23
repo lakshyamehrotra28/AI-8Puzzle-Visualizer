@@ -238,3 +238,6 @@ Manhattan Distance strictly dominates Misplaced Tiles: h2(n) >= h1(n).
 
 ### Algorithmic Complexity
 Time: O(b^m) | Space: O(b^m) | Branching factor: b <= 4.
+
+### Academic Citation
+Course: Artificial Intelligence, Student: 24BCI0212.

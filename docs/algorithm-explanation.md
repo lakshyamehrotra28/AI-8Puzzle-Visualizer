@@ -435,3 +435,7 @@ Answer: The algorithm identifies the match on initialization and immediately ret
 
 #### Viva Q23: Why does a more informed heuristic reduce search time?
 Answer: Higher heuristic values prune unpromising subtrees, concentrating search along the direct path to the goal.
+
+
+#### Viva Q24: What are the student details for this implementation?
+Answer: Student Registration Number 24BCI0212, Course: Artificial Intelligence, Assigned Algorithm: GBFS.

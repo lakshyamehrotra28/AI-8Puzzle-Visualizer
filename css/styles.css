@@ -724,3 +724,5 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; animation: none !important; } }
 
 .puzzle-tile.in-place { border-color: #10b981 !important; }
+
+.metric-highlight { background: linear-gradient(135deg, rgba(79,142,247,0.1), rgba(16,185,129,0.1)); }

@@ -163,3 +163,5 @@ All 64 tests execute in under 200 milliseconds and require zero external depende
 - Spec: Each integer in [0..8] must appear exactly once.
 
 - Spec: Blank tile at index 0 must generate exactly 2 successors (DOWN, RIGHT).
+
+- Spec: Blank tile at index 4 must generate exactly 4 successors (UP, DOWN, LEFT, RIGHT).

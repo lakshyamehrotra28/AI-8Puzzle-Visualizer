@@ -239,3 +239,5 @@ export default {
   getTileBreakdown,
   isAdmissible,
 };
+
+/** JSDoc: Heuristic function mathematical contracts */

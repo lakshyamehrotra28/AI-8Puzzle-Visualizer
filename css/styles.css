@@ -714,3 +714,5 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
 .goal-glow { animation: pulseGoal 2s infinite ease-in-out; }
 
 @media (max-width: 640px) { h1 { font-size: 1.75rem !important; } }
+
+.puzzle-tile.blank { transition: background 0.3s ease; }

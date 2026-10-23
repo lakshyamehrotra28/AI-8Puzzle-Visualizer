@@ -371,3 +371,7 @@ Answer: The blank is an empty slot; moving any numbered tile implicitly moves th
 
 #### Viva Q7: What is the effective branching factor b*?
 Answer: It is the branching factor of a uniform tree of depth d containing N nodes: N = sum_{i=0}^d (b*)^i.
+
+
+#### Viva Q8: What metric space does Manhattan Distance represent?
+Answer: The L1 norm on the discrete 2D integer grid Z^2.

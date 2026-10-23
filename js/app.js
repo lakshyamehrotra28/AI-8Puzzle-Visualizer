@@ -71,6 +71,7 @@ function init() {
   setupInputGrids();
   setupEventListeners();
   renderInitialBoards();
+  initHeroInteractivePuzzle();
   populateAlgorithmPage();
   populateComparisonTable();
   navigateTo('home');
@@ -325,6 +326,33 @@ function setupEventListeners() {
 function handleKeyboard(e) {
   if (e.target.tagName === 'INPUT') return; // Don't intercept input fields
 
+  // On home page, arrow keys slide adjacent tiles into the blank space
+  const homeSection = $('page-home');
+  if (homeSection && homeSection.classList.contains('active') && !heroState.isSolving) {
+    const blankIdx = heroState.tiles.indexOf(BLANK_TILE);
+    if (blankIdx !== -1) {
+      const r = Math.floor(blankIdx / 3);
+      const c = blankIdx % 3;
+      let targetIdx = -1;
+      // Note: ArrowUp moves tile below blank upwards into blank
+      if (e.key === 'ArrowUp' && r < 2) targetIdx = (r + 1) * 3 + c;
+      if (e.key === 'ArrowDown' && r > 0) targetIdx = (r - 1) * 3 + c;
+      if (e.key === 'ArrowLeft' && c < 2) targetIdx = r * 3 + (c + 1);
+      if (e.key === 'ArrowRight' && c > 0) targetIdx = r * 3 + (c - 1);
+
+      if (targetIdx !== -1) {
+        e.preventDefault();
+        heroState.tiles[blankIdx] = heroState.tiles[targetIdx];
+        heroState.tiles[targetIdx] = BLANK_TILE;
+        heroState.moves++;
+        renderHeroPuzzle();
+        const solved = heroState.tiles.every((v, i) => v === heroState.goal[i]);
+        if (solved) showToast(`🎉 Puzzle solved in ${heroState.moves} moves!`, 'success');
+        return;
+      }
+    }
+  }
+
   if (e.key === ' ') { e.preventDefault(); viz?.togglePlay(); }
   if (e.key === 'ArrowRight') viz?.stepForward();
   if (e.key === 'ArrowLeft')  viz?.stepBackward();
@@ -512,7 +540,22 @@ function renderInitialDisplay() {
   const container = $('initial-board-display');
   if (container && state.initialTiles) {
     if (!viz) viz = new Visualizer({});
-    viz.renderStaticBoard(state.initialTiles, container, state.goalTiles);
+    viz.renderStaticBoard(state.initialTiles, container, state.goalTiles, (clickedIdx) => {
+      // User clicked an adjacent movable tile on the solver preview board
+      const blankIdx = state.initialTiles.indexOf(BLANK_TILE);
+      if (blankIdx === -1) return;
+
+      const nextTiles = [...state.initialTiles];
+      nextTiles[blankIdx] = nextTiles[clickedIdx];
+      nextTiles[clickedIdx] = BLANK_TILE;
+      state.initialTiles = nextTiles;
+
+      // Sync input grid and validations
+      setInputGridValues('initial-input-grid', state.initialTiles);
+      validateAndPreviewInput('initial', state.initialTiles);
+      renderBoards();
+      checkSolvabilityDisplay(state.initialTiles, state.goalTiles);
+    });
   }
 }
 
@@ -641,7 +684,159 @@ function updateHeuristicInfoDisplay() {
 }
 
 // Export for testing
-export { state, handleRunSolver, handleReset, handleGenerateRandom };
+// ── Hero Interactive Playable Puzzle ────────────────────────
+const heroState = {
+  tiles: [...DEFAULT_INITIAL],
+  goal:  [...DEFAULT_GOAL],
+  moves: 0,
+  isSolving: false,
+  timer: null
+};
+
+function initHeroInteractivePuzzle() {
+  const gridEl = $('hero-puzzle-grid');
+  if (!gridEl) return;
+
+  renderHeroPuzzle();
+
+  // Button: Shuffle
+  $('btn-hero-shuffle')?.addEventListener('click', () => {
+    if (heroState.isSolving) stopHeroSolving();
+    heroState.tiles = generateRandomSolvable(heroState.goal, 6, 16);
+    heroState.moves = 0;
+    renderHeroPuzzle();
+    showToast('🎲 Shuffled to a solvable puzzle! Click tiles or use arrow keys.', 'info');
+  });
+
+  // Button: Reset
+  $('btn-hero-reset')?.addEventListener('click', () => {
+    if (heroState.isSolving) stopHeroSolving();
+    heroState.tiles = [...DEFAULT_INITIAL];
+    heroState.moves = 0;
+    renderHeroPuzzle();
+    showToast('↺ Reset to initial state.', 'info');
+  });
+
+  // Button: AI Auto-Solve
+  $('btn-hero-solve')?.addEventListener('click', handleHeroAutoSolve);
+}
+
+function renderHeroPuzzle() {
+  const gridEl = $('hero-puzzle-grid');
+  if (!gridEl) return;
+
+  if (!viz) viz = new Visualizer({});
+
+  viz.renderStaticBoard(heroState.tiles, gridEl, heroState.goal, (clickedIdx) => {
+    if (heroState.isSolving) return;
+    const blankIdx = heroState.tiles.indexOf(BLANK_TILE);
+    if (blankIdx === -1) return;
+
+    heroState.tiles[blankIdx] = heroState.tiles[clickedIdx];
+    heroState.tiles[clickedIdx] = BLANK_TILE;
+    heroState.moves++;
+
+    renderHeroPuzzle();
+
+    // Check if solved
+    const solved = heroState.tiles.every((v, i) => v === heroState.goal[i]);
+    if (solved) {
+      showToast(`🎉 Congratulations! You solved the 8-puzzle in ${heroState.moves} moves!`, 'success');
+    }
+  });
+
+  // Update metrics
+  const moveEl = $('hero-move-count');
+  if (moveEl) moveEl.textContent = heroState.moves;
+
+  const hManhattan = computeHeuristic(heroState.tiles, heroState.goal, HEURISTIC.MANHATTAN);
+  const hMisplaced = computeHeuristic(heroState.tiles, heroState.goal, HEURISTIC.MISPLACED);
+
+  const hManEl = $('hero-h-manhattan');
+  if (hManEl) hManEl.textContent = hManhattan;
+
+  const hMisEl = $('hero-h-misplaced');
+  if (hMisEl) hMisEl.textContent = hMisplaced;
+
+  // Status badge
+  const statusEl = $('hero-puzzle-status');
+  if (statusEl) {
+    if (hManhattan === 0) {
+      statusEl.textContent = 'Solved! 🎉';
+      statusEl.className = 'status-badge solved';
+    } else if (heroState.isSolving) {
+      statusEl.textContent = 'AI Solving...';
+      statusEl.className = 'status-badge solving';
+    } else {
+      statusEl.textContent = 'Ready to Play';
+      statusEl.className = 'status-badge ready';
+    }
+  }
+}
+
+function stopHeroSolving() {
+  if (heroState.timer) {
+    clearInterval(heroState.timer);
+    heroState.timer = null;
+  }
+  heroState.isSolving = false;
+  const solveBtn = $('btn-hero-solve');
+  if (solveBtn) {
+    solveBtn.disabled = false;
+    solveBtn.textContent = '⚡ AI Auto-Solve';
+  }
+}
+
+async function handleHeroAutoSolve() {
+  if (heroState.isSolving) return;
+
+  const h = computeHeuristic(heroState.tiles, heroState.goal, HEURISTIC.MANHATTAN);
+  if (h === 0) {
+    showToast('The puzzle is already in the goal state!', 'info');
+    return;
+  }
+
+  heroState.isSolving = true;
+  const solveBtn = $('btn-hero-solve');
+  if (solveBtn) {
+    solveBtn.disabled = true;
+    solveBtn.textContent = '⏳ Thinking...';
+  }
+
+  showToast('Running GBFS on current puzzle state...', 'info');
+
+  await new Promise(r => setTimeout(r, 20));
+
+  const result = runGBFS(heroState.tiles, heroState.goal, { heuristic: HEURISTIC.MANHATTAN });
+
+  if (!result.found || !result.solutionPath || result.solutionPath.length <= 1) {
+    showToast('Could not find solution from this state.', 'warning');
+    stopHeroSolving();
+    renderHeroPuzzle();
+    return;
+  }
+
+  if (solveBtn) solveBtn.textContent = '▶ Solving...';
+  renderHeroPuzzle();
+
+  let stepIdx = 1;
+  const path = result.solutionPath;
+
+  heroState.timer = setInterval(() => {
+    if (stepIdx < path.length) {
+      heroState.tiles = [...path[stepIdx].state];
+      heroState.moves++;
+      renderHeroPuzzle();
+      stepIdx++;
+    } else {
+      stopHeroSolving();
+      renderHeroPuzzle();
+      showToast(`✅ AI solved the puzzle in ${path.length - 1} moves using GBFS!`, 'success');
+    }
+  }, 280);
+}
+
+export { state, heroState, handleRunSolver, handleReset, handleGenerateRandom, initHeroInteractivePuzzle };
 
 /** JSDoc: Application lifecycle orchestrator */
 

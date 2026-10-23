@@ -234,24 +234,44 @@ export class Visualizer {
   }
 
   /**
-   * Render a static board (initial or goal display).
+   * Render a static board (initial or goal display, or interactive playable board).
    * @param {number[]} tiles
    * @param {Element}  container
-   * @param {number[]} [goalTiles]  - Optional, for highlighting in-place tiles
+   * @param {number[]} [goalTiles]   - Optional, for highlighting in-place tiles
+   * @param {Function} [onTileClick] - Optional, callback(index) when an adjacent movable tile is clicked
    */
-  renderStaticBoard(tiles, container, goalTiles = null) {
+  renderStaticBoard(tiles, container, goalTiles = null, onTileClick = null) {
     if (!container || !tiles) return;
 
     container.innerHTML = '';
+    const blankIdx = tiles.indexOf(BLANK_TILE);
+    const blankRow = blankIdx !== -1 ? Math.floor(blankIdx / 3) : -1;
+    const blankCol = blankIdx !== -1 ? blankIdx % 3 : -1;
+
     tiles.forEach((val, idx) => {
       const tile = document.createElement('div');
       const isBlank = val === BLANK_TILE;
       const inPlace = !isBlank && goalTiles && val === goalTiles[idx];
+      const r = Math.floor(idx / 3);
+      const c = idx % 3;
+      const isAdjacent = blankIdx !== -1 && (Math.abs(r - blankRow) + Math.abs(c - blankCol) === 1);
+      const isMovable = !isBlank && isAdjacent && typeof onTileClick === 'function';
 
-      tile.className     = 'puzzle-tile ' + (isBlank ? 'blank' : inPlace ? 'in-place' : 'numbered');
+      tile.className     = 'puzzle-tile ' + (isBlank ? 'blank' : inPlace ? 'in-place' : 'numbered') + (isMovable ? ' movable' : '');
       tile.textContent   = isBlank ? '' : String(val);
       tile.dataset.value = val;
       tile.dataset.index = idx;
+
+      if (isMovable) {
+        tile.setAttribute('role', 'button');
+        tile.setAttribute('tabindex', '0');
+        tile.setAttribute('aria-label', `Move tile ${val}`);
+        tile.addEventListener('click', (e) => {
+          e.preventDefault();
+          onTileClick(idx);
+        });
+      }
+
       container.appendChild(tile);
     });
   }

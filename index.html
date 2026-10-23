@@ -156,59 +156,112 @@
       ════════════════════════════════════════════ -->
       <section id="page-home" class="page-section active" aria-label="Home - Introduction">
 
-        <!-- Hero Banner -->
+        <!-- Hero Banner with Live Playable 8-Puzzle -->
         <div class="hero-section">
-          <div class="hero-content">
-            <div class="hero-eyebrow">🎓 AI Case Study · Greedy Best-First Search</div>
-            <h1 class="hero-title">
-              Interactive 8-Puzzle<br/>
-              <span class="animated-gradient-text">AI Problem Solver</span>
-            </h1>
-            <p class="hero-subtitle">
-              A complete visualization of the <strong>Greedy Best-First Search</strong> algorithm
-              solving the classic 8-Puzzle problem. Explore heuristic search, step-by-step
-              state-space exploration, and performance analytics.
-            </p>
+          <div class="hero-grid-layout">
+            <div class="hero-content">
+              <div class="hero-eyebrow">🎓 AI Case Study · Greedy Best-First Search</div>
+              <h1 class="hero-title">
+                Interactive 8-Puzzle<br/>
+                <span class="animated-gradient-text">AI Problem Solver</span>
+              </h1>
+              <p class="hero-subtitle">
+                A complete visualization of the <strong>Greedy Best-First Search</strong> algorithm
+                solving the classic 8-Puzzle problem. Explore heuristic search, step-by-step
+                state-space exploration, and performance analytics.
+              </p>
 
-            <!-- Student Details Badges -->
-            <div class="hero-badges">
-              <div class="info-badge">
-                <span>👤</span>
-                <div>
-                  <div class="badge-label">Registration Number</div>
-                  <div class="badge-value text-mono">24BCI0212</div>
+              <!-- Student Details Badges -->
+              <div class="hero-badges">
+                <div class="info-badge">
+                  <span>👤</span>
+                  <div>
+                    <div class="badge-label">Registration Number</div>
+                    <div class="badge-value text-mono">24BCI0212</div>
+                  </div>
+                </div>
+                <div class="info-badge">
+                  <span>📚</span>
+                  <div>
+                    <div class="badge-label">Course</div>
+                    <div class="badge-value">Artificial Intelligence</div>
+                  </div>
+                </div>
+                <div class="info-badge">
+                  <span>⚡</span>
+                  <div>
+                    <div class="badge-label">Assigned Algorithm</div>
+                    <div class="badge-value text-accent">Greedy Best-First Search</div>
+                  </div>
+                </div>
+                <div class="info-badge">
+                  <span>🔢</span>
+                  <div>
+                    <div class="badge-label">Evaluation Function</div>
+                    <div class="badge-value text-mono text-amber">f(n) = h(n)</div>
+                  </div>
                 </div>
               </div>
-              <div class="info-badge">
-                <span>📚</span>
-                <div>
-                  <div class="badge-label">Course</div>
-                  <div class="badge-value">Artificial Intelligence</div>
-                </div>
-              </div>
-              <div class="info-badge">
-                <span>⚡</span>
-                <div>
-                  <div class="badge-label">Assigned Algorithm</div>
-                  <div class="badge-value text-accent">Greedy Best-First Search</div>
-                </div>
-              </div>
-              <div class="info-badge">
-                <span>🔢</span>
-                <div>
-                  <div class="badge-label">Evaluation Function</div>
-                  <div class="badge-value text-mono text-amber">f(n) = h(n)</div>
-                </div>
+
+              <div class="hero-actions">
+                <button class="btn btn-primary btn-lg" id="btn-start-solving" data-page="solver">
+                  🎯 Go to Solver Studio
+                </button>
+                <button class="btn btn-secondary btn-lg" data-page="algorithm">
+                  📖 Learn GBFS
+                </button>
               </div>
             </div>
 
-            <div class="hero-actions">
-              <button class="btn btn-primary btn-lg" id="btn-start-solving" data-page="solver">
-                🎯 Start Solving
-              </button>
-              <button class="btn btn-secondary btn-lg" data-page="algorithm">
-                📖 Learn GBFS
-              </button>
+            <!-- Interactive Playable 8-Puzzle Card -->
+            <div class="hero-puzzle-wrapper">
+              <div class="card card-glow hero-puzzle-card">
+                <div class="hero-puzzle-header">
+                  <div class="hero-puzzle-title">
+                    <span>🎮</span>
+                    <span>Live 8-Puzzle</span>
+                  </div>
+                  <span id="hero-puzzle-status" class="status-badge ready">Ready to Play</span>
+                </div>
+
+                <p class="hero-puzzle-instruction">
+                  Click any adjacent tile or use <kbd>Arrow Keys</kbd> to slide into the blank!
+                </p>
+
+                <!-- 3x3 Puzzle Grid -->
+                <div class="puzzle-container" style="margin: 8px 0;">
+                  <div id="hero-puzzle-grid" class="puzzle-grid interactive-board" role="grid" aria-label="Interactive 8-puzzle game board"></div>
+                </div>
+
+                <!-- Live Heuristics & Metrics Bar -->
+                <div class="hero-puzzle-stats">
+                  <div class="hero-stat-pill">
+                    <span class="stat-label">Moves</span>
+                    <span id="hero-move-count" class="stat-value text-mono">0</span>
+                  </div>
+                  <div class="hero-stat-pill">
+                    <span class="stat-label">Manhattan h₂</span>
+                    <span id="hero-h-manhattan" class="stat-value text-accent text-mono">3</span>
+                  </div>
+                  <div class="hero-stat-pill">
+                    <span class="stat-label">Misplaced h₁</span>
+                    <span id="hero-h-misplaced" class="stat-value text-amber text-mono">2</span>
+                  </div>
+                </div>
+
+                <!-- Game Controls -->
+                <div class="hero-puzzle-controls">
+                  <button id="btn-hero-shuffle" class="btn btn-teal btn-sm" title="Shuffle into a random solvable puzzle">
+                    🎲 Shuffle
+                  </button>
+                  <button id="btn-hero-solve" class="btn btn-primary btn-sm" title="Let AI solve this puzzle using GBFS">
+                    ⚡ AI Auto-Solve
+                  </button>
+                  <button id="btn-hero-reset" class="btn btn-secondary btn-sm" title="Reset puzzle to start">
+                    ↺ Reset
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -500,8 +553,8 @@ State Space: 9!/2 = 181,440 reachable states
               </div>
               <div class="grid-2" style="gap:24px; justify-items:center;">
                 <div class="puzzle-container">
-                  <div class="puzzle-label">Initial State</div>
-                  <div id="initial-board-display" class="puzzle-grid" role="img" aria-label="Initial board state"></div>
+                  <div class="puzzle-label">Initial State <span class="text-xs text-muted" style="font-weight:normal;">(Click tile to slide)</span></div>
+                  <div id="initial-board-display" class="puzzle-grid interactive-board" role="img" aria-label="Initial board state"></div>
                 </div>
                 <div class="puzzle-container">
                   <div class="puzzle-label">Goal State</div>

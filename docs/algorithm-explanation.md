@@ -267,3 +267,7 @@ Reinefeld (1993) proved through exhaustive search that the maximum distance betw
 
 ### Admissibility Proof for Manhattan Distance
 Since each slide move changes either the row or column of a tile by at most 1, each tile t requires at least |r(t) - r_goal(t)| + |c(t) - c_goal(t)| moves to reach its goal position. Since no move can move two tiles closer simultaneously, h2(n) <= h*(n).
+
+
+### Admissibility Proof for Misplaced Tiles
+Each misplaced tile t (where tile_t != goal_t and t != 0) is not in its goal cell and must be moved at least once. Since a single move moves exactly one numbered tile, h1(n) <= h*(n).

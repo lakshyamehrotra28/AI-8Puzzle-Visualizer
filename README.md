@@ -223,3 +223,6 @@ Common questions regarding solvability parity and browser caching.
 
 ### Demonstration Walkthrough
 Step-by-step script for conducting faculty viva presentations.
+
+### Keyboard Shortcuts
+Space: Play/Pause | ArrowRight: Next Step | ArrowLeft: Previous Step | R: Reset.

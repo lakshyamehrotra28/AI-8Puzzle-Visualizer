@@ -741,3 +741,5 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
 .info-val { font-variant-numeric: tabular-nums; }
 
 @media (max-width: 768px) { .solver-grid { grid-template-columns: 1fr !important; } }
+
+.card-depth { box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5); }

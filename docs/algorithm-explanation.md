@@ -307,3 +307,7 @@ Answer: The blank tile does not represent a physical tile to be moved; moving an
 
 #### Viva Q7: What is the Effective Branching Factor b*?
 Answer: b* is the branching factor of a uniform tree of depth d containing N nodes, satisfying N = sum_{i=0}^d (b*)^i.
+
+
+#### Viva Q8: What metric space does Manhattan Distance correspond to?
+Answer: It is the L1 norm (taxicab or rectilinear distance) on the discrete 2D integer lattice Z^2.

@@ -281,6 +281,26 @@ test('inversion count for [2,1,3,...] is 1', () => {
   assertEqual(inv, 1, `[2,1,...] should have 1 inversion, got ${inv}`);
 });
 
+test('parity invariance: legal moves strictly preserve inversion parity mod 2', () => {
+  let state = [1,2,3,4,5,6,7,8,0];
+  const initialParity = countInversions(state) % 2;
+  for (let step = 0; step < 200; step++) {
+    const succs = getSuccessors(state);
+    const next = succs[Math.floor(Math.random() * succs.length)].tiles;
+    const nextParity = countInversions(next) % 2;
+    assertEqual(nextParity, initialParity, `Parity broken at transition step ${step}`);
+    state = next;
+  }
+});
+
+test('solvability: non-standard goal states matching parity', () => {
+  const goalEven = [8,7,6,5,4,3,2,1,0]; // 28 inversions -> even
+  const startEven = [1,2,3,4,5,6,7,8,0]; // 0 inversions -> even
+  const startOdd = [2,1,3,4,5,6,7,8,0];  // 1 inversion -> odd
+  assert(isSolvable(startEven, goalEven), 'Even start should be solvable to even goal');
+  assert(!isSolvable(startOdd, goalEven), 'Odd start should NOT be solvable to even goal');
+});
+
 // ══════════════════════════════════════════════════════════════
 // RESULTS SUMMARY
 // ══════════════════════════════════════════════════════════════

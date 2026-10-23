@@ -335,3 +335,7 @@ Every misplaced tile must be moved at least once. Since a single move displaces 
 
 ### Admissibility Proof for h2(n)
 Each tile t must travel at least |r(t) - r_goal(t)| + |c(t) - c_goal(t)| moves. Since no move can decrease distance for two tiles simultaneously, h2(n) <= h*(n).
+
+
+### Mathematical Dominance Theorem
+For any misplaced tile t, Manhattan distance is >= 1. Summing over all misplaced tiles proves h2(n) >= h1(n) for all states n.

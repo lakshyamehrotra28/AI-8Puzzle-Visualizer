@@ -275,3 +275,7 @@ Each misplaced tile t (where tile_t != goal_t and t != 0) is not in its goal cel
 
 ### Heuristic Dominance Proof
 For any non-blank tile t that is misplaced, its distance |r - r_goal| + |c - c_goal| >= 1. Summing over all misplaced tiles gives h2(n) >= h1(n). Hence h2 dominates h1.
+
+
+### Consistency (Monotonicity) Proof
+A heuristic h is consistent if h(n) <= c(n, a, n') + h(n'). In the 8-puzzle, c(n, a, n') = 1. A single tile move changes Manhattan distance by +1, -1, or 0. Thus |h2(n) - h2(n')| <= 1 = c(n, a, n').

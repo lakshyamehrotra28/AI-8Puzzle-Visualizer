@@ -1,0 +1,1250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="AI-8Puzzle-Visualizer: Interactive 8-Puzzle Problem Solver using Greedy Best-First Search. Student: 24BCI0212, Course: Artificial Intelligence." />
+  <meta name="keywords" content="8-puzzle, AI, greedy best first search, GBFS, artificial intelligence, heuristic, Manhattan distance, visualizer" />
+  <meta name="author" content="Student 24BCI0212" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="AI-8Puzzle-Visualizer | GBFS Solver" />
+  <meta property="og:description" content="Interactive 8-Puzzle Solver using Greedy Best-First Search with step-by-step visualization." />
+  <meta property="og:type" content="website" />
+
+  <title>AI-8Puzzle-Visualizer | Greedy Best-First Search</title>
+
+  <!-- Tailwind CSS (CDN for utility classes) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Custom Stylesheet -->
+  <link rel="stylesheet" href="css/styles.css" />
+
+  <!-- Tailwind Config -->
+  <script>
+    tailwind.config = {
+      corePlugins: { preflight: false },
+      theme: {
+        extend: {
+          colors: {
+            'bg-primary': '#0a0e1a',
+            'accent': '#4f8ef7',
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body>
+  <!-- Background Glow Orbs -->
+  <div class="glow-orb glow-orb-1" aria-hidden="true"></div>
+  <div class="glow-orb glow-orb-2" aria-hidden="true"></div>
+
+  <!-- Skip to main content (accessibility) -->
+  <a href="#main" class="sr-only">Skip to main content</a>
+
+  <div class="app-layout">
+
+    <!-- ═══════════════════════════════════════════
+         SIDEBAR NAVIGATION
+    ════════════════════════════════════════════ -->
+    <nav id="sidebar" class="sidebar" role="navigation" aria-label="Main navigation">
+      <!-- Logo / Branding -->
+      <div class="sidebar-logo">
+        <div class="logo-icon" aria-hidden="true">🧩</div>
+        <div class="logo-text">
+          <div class="logo-title">AI-8Puzzle</div>
+          <div class="logo-sub">Visualizer v1.0</div>
+        </div>
+      </div>
+
+      <!-- Primary Navigation -->
+      <div class="sidebar-section">
+        <div class="sidebar-label">Navigation</div>
+
+        <div class="nav-item active" data-page="home" role="button" tabindex="0" aria-label="Go to Home page">
+          <span class="nav-icon">🏠</span>
+          <span>Home</span>
+        </div>
+
+        <div class="nav-item" data-page="solver" role="button" tabindex="0" aria-label="Go to Puzzle Solver">
+          <span class="nav-icon">🎯</span>
+          <span>Puzzle Solver</span>
+        </div>
+
+        <div class="nav-item" data-page="visualization" role="button" tabindex="0" aria-label="Go to Search Visualization">
+          <span class="nav-icon">📊</span>
+          <span>Visualization</span>
+          <span class="nav-badge">GBFS</span>
+        </div>
+
+        <div class="nav-item" data-page="comparison" role="button" tabindex="0" aria-label="Go to Performance Comparison">
+          <span class="nav-icon">📈</span>
+          <span>Performance</span>
+        </div>
+
+        <div class="nav-item" data-page="algorithm" role="button" tabindex="0" aria-label="Go to Algorithm Information">
+          <span class="nav-icon">🔬</span>
+          <span>Algorithm Info</span>
+        </div>
+
+        <div class="nav-item" data-page="about" role="button" tabindex="0" aria-label="Go to About page">
+          <span class="nav-icon">📋</span>
+          <span>About</span>
+        </div>
+      </div>
+
+      <!-- Algorithm Info Section -->
+      <div class="sidebar-section">
+        <div class="sidebar-label">Algorithm</div>
+
+        <div class="nav-item" style="cursor:default; pointer-events:none;">
+          <span class="nav-icon">⚡</span>
+          <span>GBFS</span>
+          <span class="nav-badge" style="background:var(--clr-accent-teal)">Active</span>
+        </div>
+
+        <div class="nav-item" style="cursor:default; pointer-events:none; opacity:0.5;">
+          <span class="nav-icon">📌</span>
+          <span style="font-size:0.8rem;">f(n) = h(n)</span>
+        </div>
+      </div>
+
+      <!-- Student Footer Badge -->
+      <div class="sidebar-footer">
+        <div class="student-badge">
+          <div class="reg-num">24BCI0212</div>
+          <div class="algo-tag">Assigned: GBFS</div>
+          <div class="algo-tag" style="margin-top:2px; font-size:0.6rem;">Artificial Intelligence</div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Sidebar Overlay (mobile) -->
+    <div id="sidebar-overlay" class="sidebar-overlay" aria-hidden="true"></div>
+
+    <!-- ═══════════════════════════════════════════
+         MAIN CONTENT AREA
+    ════════════════════════════════════════════ -->
+    <main id="main" class="main-content">
+
+      <!-- Top Header -->
+      <header class="top-header" role="banner">
+        <div style="display:flex; align-items:center; gap:16px;">
+          <button id="hamburger" class="hamburger" aria-label="Toggle navigation menu" aria-expanded="false">
+            <span></span><span></span><span></span>
+          </button>
+          <div>
+            <div id="header-title" class="header-title">Home — Introduction</div>
+            <div class="header-meta">Artificial Intelligence | 8-Puzzle Solver</div>
+          </div>
+        </div>
+        <div class="header-actions">
+          <div class="header-status">
+            <div class="status-dot" aria-hidden="true"></div>
+            <span>GBFS Ready</span>
+          </div>
+          <button class="btn btn-primary btn-sm" data-page="solver" id="btn-quick-solve">
+            ▶ Solve Now
+          </button>
+        </div>
+      </header>
+
+      <!-- ═══════════════════════════════════════════
+           PAGE 1: HOME
+      ════════════════════════════════════════════ -->
+      <section id="page-home" class="page-section active" aria-label="Home - Introduction">
+
+        <!-- Hero Banner -->
+        <div class="hero-section">
+          <div class="hero-content">
+            <div class="hero-eyebrow">🎓 AI Case Study · Greedy Best-First Search</div>
+            <h1 class="hero-title">
+              Interactive 8-Puzzle<br/>
+              <span class="animated-gradient-text">AI Problem Solver</span>
+            </h1>
+            <p class="hero-subtitle">
+              A complete visualization of the <strong>Greedy Best-First Search</strong> algorithm
+              solving the classic 8-Puzzle problem. Explore heuristic search, step-by-step
+              state-space exploration, and performance analytics.
+            </p>
+
+            <!-- Student Details Badges -->
+            <div class="hero-badges">
+              <div class="info-badge">
+                <span>👤</span>
+                <div>
+                  <div class="badge-label">Registration Number</div>
+                  <div class="badge-value text-mono">24BCI0212</div>
+                </div>
+              </div>
+              <div class="info-badge">
+                <span>📚</span>
+                <div>
+                  <div class="badge-label">Course</div>
+                  <div class="badge-value">Artificial Intelligence</div>
+                </div>
+              </div>
+              <div class="info-badge">
+                <span>⚡</span>
+                <div>
+                  <div class="badge-label">Assigned Algorithm</div>
+                  <div class="badge-value text-accent">Greedy Best-First Search</div>
+                </div>
+              </div>
+              <div class="info-badge">
+                <span>🔢</span>
+                <div>
+                  <div class="badge-label">Evaluation Function</div>
+                  <div class="badge-value text-mono text-amber">f(n) = h(n)</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-actions">
+              <button class="btn btn-primary btn-lg" id="btn-start-solving">
+                🎯 Start Solving
+              </button>
+              <button class="btn btn-secondary btn-lg" data-page="algorithm">
+                📖 Learn GBFS
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- About the 8-Puzzle Problem -->
+        <div class="grid-2 mb-xl">
+          <div class="card card-glow">
+            <div class="card-header">
+              <div class="card-title">
+                <div class="card-icon icon-blue">🧩</div>
+                The 8-Puzzle Problem
+              </div>
+            </div>
+            <p style="margin-bottom:16px;">
+              The <strong>8-Puzzle</strong> is a classical problem in Artificial Intelligence used to demonstrate and evaluate search algorithms. It consists of a 3×3 grid containing eight numbered tiles (1–8) and one blank tile (represented as 0).
+            </p>
+            <p style="margin-bottom:16px;">
+              The objective is to reach a <strong>goal configuration</strong> from an arbitrary <strong>initial configuration</strong> by sliding tiles into the blank space. This is modeled as a <em>state-space search problem</em>.
+            </p>
+            <div class="code-block">
+Initial State:        Goal State:<br/>
+  1  2  3               1  2  3<br/>
+  4  _  5               4  5  6<br/>
+  7  8  6               7  8  _<br/>
+<br/>
+State Space: 9!/2 = 181,440 reachable states
+            </div>
+          </div>
+
+          <div class="card card-glow">
+            <div class="card-header">
+              <div class="card-title">
+                <div class="card-icon icon-teal">🎯</div>
+                Project Objectives
+              </div>
+            </div>
+            <div class="timeline">
+              <div class="timeline-item">
+                <div class="timeline-title">Implement GBFS from Scratch</div>
+                <div class="timeline-body">Build a complete, working Greedy Best-First Search in JavaScript without external AI libraries.</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-title">Dual Heuristic Support</div>
+                <div class="timeline-body">Implement and compare Misplaced Tiles (h₁) and Manhattan Distance (h₂) heuristics.</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-title">Step-by-Step Visualization</div>
+                <div class="timeline-body">Animate the search process with complete frontier and explored-set tracking.</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-title">Performance Analysis</div>
+                <div class="timeline-body">Measure and display actual search statistics. Compare with theoretical algorithm properties.</div>
+              </div>
+              <div class="timeline-item">
+                <div class="timeline-title">Academic Documentation</div>
+                <div class="timeline-body">Provide detailed algorithm explanation appropriate for undergraduate AI viva.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- State-Space Search Explanation -->
+        <div class="card mb-xl">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon icon-purple">🔬</div>
+              State-Space Search Formulation
+            </div>
+          </div>
+          <div class="grid-3" style="gap:16px;">
+            <div class="card" style="background:var(--clr-bg-secondary);">
+              <div class="text-accent fw-bold mb-sm">📦 State</div>
+              <p class="text-sm">A configuration of the 9 cells in the 3×3 grid. Represented as an array of 9 integers. The blank is represented by 0.</p>
+              <div class="code-block mt-sm" style="font-size:0.75rem;">[1,2,3,4,0,5,7,8,6]</div>
+            </div>
+            <div class="card" style="background:var(--clr-bg-secondary);">
+              <div class="text-teal fw-bold mb-sm">⚙️ Actions</div>
+              <p class="text-sm">Slide the blank tile UP, DOWN, LEFT, or RIGHT (if within bounds). A 3×3 grid has at most 4 successors per state.</p>
+              <div class="code-block mt-sm" style="font-size:0.75rem;">Successors: UP · DOWN<br/>LEFT · RIGHT</div>
+            </div>
+            <div class="card" style="background:var(--clr-bg-secondary);">
+              <div class="text-amber fw-bold mb-sm">🏁 Goal Test</div>
+              <p class="text-sm">Check if the current state matches the goal configuration. The standard goal has tiles 1–8 in order with blank at position 8.</p>
+              <div class="code-block mt-sm" style="font-size:0.75rem;">[1,2,3,4,5,6,7,8,0]</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Feature Cards -->
+        <h2 class="section-title mb-lg" style="font-size:1.3rem;">Project Features</h2>
+        <div class="grid-4 mb-xl">
+          <div class="card card-glow text-center">
+            <div style="font-size:2rem; margin-bottom:12px;">⚡</div>
+            <h4 style="font-size:0.9rem; margin-bottom:8px;">GBFS Algorithm</h4>
+            <p class="text-sm text-muted">Full implementation with priority queue, frontier tracking, and explored set.</p>
+          </div>
+          <div class="card card-glow text-center">
+            <div style="font-size:2rem; margin-bottom:12px;">📐</div>
+            <h4 style="font-size:0.9rem; margin-bottom:8px;">Dual Heuristics</h4>
+            <p class="text-sm text-muted">Misplaced Tiles h₁ and Manhattan Distance h₂ — both admissible and consistent.</p>
+          </div>
+          <div class="card card-glow text-center">
+            <div style="font-size:2rem; margin-bottom:12px;">🎬</div>
+            <h4 style="font-size:0.9rem; margin-bottom:8px;">Step Visualization</h4>
+            <p class="text-sm text-muted">Navigate forward/backward through every search step with animated tile movements.</p>
+          </div>
+          <div class="card card-glow text-center">
+            <div style="font-size:2rem; margin-bottom:12px;">📊</div>
+            <h4 style="font-size:0.9rem; margin-bottom:8px;">Live Statistics</h4>
+            <p class="text-sm text-muted">Real-time display of nodes generated, expanded, search depth, and execution time.</p>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ═══════════════════════════════════════════
+           PAGE 2: PUZZLE SOLVER
+      ════════════════════════════════════════════ -->
+      <section id="page-solver" class="page-section" aria-label="Puzzle Solver">
+
+        <div class="section-header">
+          <div class="section-eyebrow">Configure &amp; Solve</div>
+          <h2 class="section-title">Puzzle Solver</h2>
+          <p class="section-desc">Set up your puzzle and run Greedy Best-First Search with your chosen heuristic.</p>
+        </div>
+
+        <!-- Input Method Tabs -->
+        <div class="tab-list mb-lg">
+          <button class="tab-btn active" data-tab-group="input" data-tab="manual">✏️ Manual Input</button>
+          <button class="tab-btn" data-tab-group="input" data-tab="random">🎲 Random Puzzle</button>
+          <button class="tab-btn" data-tab-group="input" data-tab="presets">📋 Presets</button>
+        </div>
+
+        <div class="solver-layout">
+
+          <!-- LEFT: Puzzle Input Panel -->
+          <div class="solver-panel">
+
+            <!-- Manual Input Tab Content -->
+            <div data-tab-content="manual" data-tab-content-group="input" class="tab-content active">
+              <div class="card mb-md">
+                <div class="card-header">
+                  <div class="card-title">
+                    <div class="card-icon icon-blue">✏️</div>
+                    Configure Puzzle States
+                  </div>
+                </div>
+
+                <!-- Side-by-side input grids -->
+                <div class="grid-2" style="gap:24px; align-items:start;">
+                  <div>
+                    <div class="puzzle-label mb-sm">Initial State</div>
+                    <div id="initial-input-grid" class="grid-input-container" role="group" aria-label="Initial board state input"></div>
+                    <div id="initial-validation-msg" class="validation-msg mt-sm" role="alert"></div>
+                  </div>
+                  <div>
+                    <div class="puzzle-label mb-sm">Goal State</div>
+                    <div id="goal-input-grid" class="grid-input-container" role="group" aria-label="Goal board state input"></div>
+                    <div id="goal-validation-msg" class="validation-msg mt-sm" role="alert"></div>
+                  </div>
+                </div>
+
+                <!-- Solvability check -->
+                <div id="solvability-msg" class="validation-msg mt-md" role="alert"></div>
+
+                <!-- Heuristic values preview -->
+                <div class="card mt-md" style="background:var(--clr-bg-secondary);">
+                  <div class="card-title mb-sm text-sm">Live Heuristic Preview</div>
+                  <div class="grid-2">
+                    <div class="info-row">
+                      <span class="info-key">h₁ Misplaced Tiles</span>
+                      <span id="h1-display" class="info-val warning">—</span>
+                    </div>
+                    <div class="info-row">
+                      <span class="info-key">h₂ Manhattan Distance</span>
+                      <span id="h2-display" class="info-val highlight">—</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div style="display:flex; gap:12px; margin-top:16px; flex-wrap:wrap;">
+                  <button id="btn-apply-input" class="btn btn-secondary btn-sm">✓ Apply States</button>
+                  <button id="btn-gen-random" class="btn btn-teal btn-sm">🎲 Generate Random</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Random Tab Content -->
+            <div data-tab-content="random" data-tab-content-group="input" class="tab-content">
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title">
+                    <div class="card-icon icon-teal">🎲</div>
+                    Random Puzzle Generator
+                  </div>
+                </div>
+                <p class="text-sm mb-md">Generate a random solvable puzzle. The generator checks solvability using inversion parity before presenting the puzzle.</p>
+                <div style="display:flex; gap:12px; flex-wrap:wrap;">
+                  <button class="btn btn-teal" onclick="document.getElementById('btn-gen-random').click()">🎲 Generate New Puzzle</button>
+                  <button class="btn btn-secondary" onclick="document.getElementById('btn-reset').click()">↺ Reset to Default</button>
+                </div>
+                <div class="card mt-md" style="background:var(--clr-bg-secondary);">
+                  <div class="text-sm fw-bold mb-sm text-accent">Solvability Algorithm</div>
+                  <p class="text-xs text-muted">A puzzle is solvable if and only if the number of inversions in the initial state has the same parity as the number of inversions in the goal state.</p>
+                  <p class="text-xs text-muted mt-sm">An <em>inversion</em> occurs when a higher-numbered tile appears before a lower-numbered tile in row-major order (blank excluded).</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Presets Tab Content -->
+            <div data-tab-content="presets" data-tab-content-group="input" class="tab-content">
+              <div class="card">
+                <div class="card-header">
+                  <div class="card-title">
+                    <div class="card-icon icon-amber">📋</div>
+                    Test Case Presets
+                  </div>
+                </div>
+                <div style="display:flex; flex-direction:column; gap:8px;">
+                  <button class="btn btn-secondary btn-sm" onclick="loadPreset('easy')">🟢 Easy (2 moves)</button>
+                  <button class="btn btn-secondary btn-sm" onclick="loadPreset('medium')">🟡 Medium (8 moves)</button>
+                  <button class="btn btn-secondary btn-sm" onclick="loadPreset('hard')">🔴 Hard (15+ moves)</button>
+                  <button class="btn btn-secondary btn-sm" onclick="loadPreset('goal')">✅ Goal (already solved)</button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Algorithm Settings -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">
+                  <div class="card-icon icon-purple">⚙️</div>
+                  Algorithm Settings
+                </div>
+              </div>
+
+              <div class="mb-md">
+                <label class="sidebar-label" for="heuristic-select">Heuristic Function</label>
+                <select id="heuristic-select" style="width:100%; margin-top:8px;" aria-label="Select heuristic function">
+                  <option value="manhattan" selected>h₂: Manhattan Distance (Recommended)</option>
+                  <option value="misplaced">h₁: Misplaced Tiles</option>
+                </select>
+                <div class="card mt-sm" style="background:var(--clr-bg-secondary); padding:12px;">
+                  <div id="heuristic-info-text" class="text-xs text-muted">
+                    <strong class="text-accent">Manhattan Distance</strong> — For each tile, computes the sum of |row_diff| + |col_diff| between current and goal positions. Admissible and more informed than Misplaced Tiles.
+                  </div>
+                </div>
+              </div>
+
+              <div class="info-row">
+                <span class="info-key">Algorithm</span>
+                <span class="info-val text-accent">Greedy Best-First Search</span>
+              </div>
+              <div class="info-row">
+                <span class="info-key">Evaluation Function</span>
+                <span class="info-val text-mono text-amber">f(n) = h(n)</span>
+              </div>
+              <div class="info-row">
+                <span class="info-key">Complete</span>
+                <span class="info-val danger">No (in infinite spaces)</span>
+              </div>
+              <div class="info-row">
+                <span class="info-key">Optimal</span>
+                <span class="info-val danger">No</span>
+              </div>
+            </div>
+
+            <!-- Run Button -->
+            <button id="btn-run" class="btn btn-primary btn-lg" style="width:100%;" aria-label="Run GBFS solver">
+              ▶ Run GBFS
+            </button>
+            <button id="btn-reset" class="btn btn-secondary" style="width:100%;" aria-label="Reset puzzle">
+              ↺ Reset Puzzle
+            </button>
+
+          </div>
+
+          <!-- RIGHT: Live Board Display -->
+          <div class="solver-panel">
+
+            <!-- Puzzle State Preview -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">
+                  <div class="card-icon icon-teal">🎯</div>
+                  Puzzle State Preview
+                </div>
+              </div>
+              <div class="grid-2" style="gap:24px; justify-items:center;">
+                <div class="puzzle-container">
+                  <div class="puzzle-label">Initial State</div>
+                  <div id="initial-board-display" class="puzzle-grid" role="img" aria-label="Initial board state"></div>
+                </div>
+                <div class="puzzle-container">
+                  <div class="puzzle-label">Goal State</div>
+                  <div id="goal-board-display" class="puzzle-grid" role="img" aria-label="Goal board state"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Solution Summary (filled after run) -->
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">
+                  <div class="card-icon icon-emerald">📊</div>
+                  Solution Summary
+                </div>
+              </div>
+              <div class="grid-2" style="gap:8px;">
+                <div class="stat-card">
+                  <div class="stat-label">Status</div>
+                  <div id="stat-solution-status" class="info-val" style="font-size:1rem;">—</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-label">Total Moves</div>
+                  <div id="stat-total-moves" class="stat-value">—</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-label">Nodes Generated</div>
+                  <div id="stat-nodes-generated" class="stat-value">—</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-label">Nodes Expanded</div>
+                  <div id="stat-nodes-expanded" class="stat-value">—</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-label">Max Depth</div>
+                  <div id="stat-max-depth" class="stat-value">—</div>
+                </div>
+                <div class="stat-card">
+                  <div class="stat-label">Execution Time</div>
+                  <div id="stat-exec-time" class="stat-value" style="font-size:1.1rem;">—</div>
+                </div>
+              </div>
+              <div class="info-row mt-md">
+                <span class="info-key">Path Cost (moves)</span>
+                <span id="stat-path-cost" class="info-val highlight">—</span>
+              </div>
+              <div class="info-row">
+                <span class="info-key">Memory Usage (estimated)</span>
+                <span id="stat-memory" class="info-val">—</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════════════════════════════════════
+           PAGE 3: VISUALIZATION
+      ════════════════════════════════════════════ -->
+      <section id="page-visualization" class="page-section" aria-label="Search Visualization">
+
+        <div class="section-header">
+          <div class="section-eyebrow">Step-by-Step Playback</div>
+          <h2 class="section-title">Search Visualization</h2>
+          <p class="section-desc">Navigate through the GBFS search tree one step at a time. Watch how the algorithm expands nodes and maintains the frontier.</p>
+        </div>
+
+        <!-- Playback Controls -->
+        <div class="control-panel mb-lg">
+          <div class="controls-group">
+            <button id="btn-step-back"  class="btn btn-secondary btn-sm" disabled aria-label="Previous step">⏮ Prev</button>
+            <button id="btn-play-pause" class="btn btn-primary  btn-sm" disabled aria-label="Play or pause visualization">▶ Play</button>
+            <button id="btn-step-fwd"   class="btn btn-secondary btn-sm" disabled aria-label="Next step">Next ⏭</button>
+
+            <div class="speed-control">
+              <span class="speed-label">Speed:</span>
+              <input type="range" id="speed-slider" min="0" max="100" value="50" aria-label="Animation speed" style="flex:1;" />
+              <span id="speed-label-val" class="speed-label">400ms</span>
+            </div>
+
+            <span id="step-counter" class="step-counter text-muted text-sm">No search loaded</span>
+          </div>
+          <!-- Progress Bar -->
+          <div class="progress-bar-container mt-md">
+            <div id="search-progress" class="progress-bar-fill" style="width:0%"></div>
+          </div>
+        </div>
+
+        <!-- Visualization Area -->
+        <div class="viz-section">
+          <!-- Current State Board -->
+          <div class="search-info-panel">
+            <div class="card-header">
+              <div class="card-title">
+                <div class="card-icon icon-amber">🎯</div>
+                Current Node
+              </div>
+            </div>
+            <div style="display:flex; justify-content:center; margin-bottom:16px;">
+              <div id="current-board" class="puzzle-grid" role="img" aria-label="Current board state"></div>
+            </div>
+            <!-- Node Details -->
+            <div class="info-row">
+              <span class="info-key">Event Type</span>
+              <span id="viz-step-type" class="info-val">—</span>
+            </div>
+            <div class="info-row">
+              <span class="info-key">Move Made</span>
+              <span id="viz-move" class="info-val text-mono">—</span>
+            </div>
+            <div class="info-row">
+              <span class="info-key">h(n) — Heuristic Value</span>
+              <span id="viz-h-value" class="info-val warning">—</span>
+            </div>
+            <div class="info-row">
+              <span class="info-key">f(n) = h(n) — GBFS Eval</span>
+              <span id="viz-f-value" class="info-val highlight">—</span>
+            </div>
+            <div class="info-row">
+              <span class="info-key">Search Depth</span>
+              <span id="viz-depth" class="info-val">—</span>
+            </div>
+          </div>
+
+          <!-- Search Statistics Panel -->
+          <div class="search-info-panel">
+            <div class="card-header">
+              <div class="card-title">
+                <div class="card-icon icon-blue">📊</div>
+                Search Progress
+              </div>
+            </div>
+            <div class="info-row">
+              <span class="info-key">Nodes Generated</span>
+              <span id="viz-nodes-generated" class="info-val">—</span>
+            </div>
+            <div class="info-row">
+              <span class="info-key">Nodes Expanded</span>
+              <span id="viz-nodes-expanded" class="info-val">—</span>
+            </div>
+            <div class="info-row">
+              <span class="info-key">Frontier Size</span>
+              <span id="viz-frontier-size" class="info-val">—</span>
+            </div>
+            <div class="info-row">
+              <span class="info-key">Explored Size</span>
+              <span id="viz-explored-size" class="info-val">—</span>
+            </div>
+
+            <!-- Frontier (Open) List -->
+            <div class="card-title mt-md mb-sm text-sm">
+              <div class="card-icon icon-amber" style="width:24px;height:24px;font-size:0.75rem;">📋</div>
+              Frontier (Open List) — top 15
+            </div>
+            <div id="frontier-list" class="list-container" role="log" aria-label="Frontier open list">
+              <div class="text-muted text-xs" style="padding:8px;">Run the solver to see frontier.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Solution Path -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon icon-emerald">🏁</div>
+              Solution Path
+            </div>
+            <span class="text-muted text-xs">Scroll horizontally to view all steps →</span>
+          </div>
+          <div id="solution-path-container" class="solution-path" role="region" aria-label="Solution path">
+            <div class="empty-state" style="padding:24px;">
+              <div class="empty-icon">🧩</div>
+              <div class="empty-title">Run the solver to see the solution path</div>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ═══════════════════════════════════════════
+           PAGE 4: PERFORMANCE COMPARISON
+      ════════════════════════════════════════════ -->
+      <section id="page-comparison" class="page-section" aria-label="Performance Comparison">
+
+        <div class="section-header">
+          <div class="section-eyebrow">Algorithm Analysis</div>
+          <h2 class="section-title">Performance Comparison</h2>
+          <p class="section-desc">
+            GBFS results are measured from actual execution. Properties for BFS, DFS, DLS, IDDFS, and A* are theoretical (not implemented) and shown for educational comparison only.
+          </p>
+        </div>
+
+        <!-- GBFS Benchmark Results -->
+        <div class="card mb-xl">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon icon-blue">⚡</div>
+              GBFS Benchmark — Actual Measured Results
+            </div>
+            <span class="badge badge-gbfs">Implemented</span>
+          </div>
+
+          <div class="grid-2 mb-lg">
+            <div class="card" style="background:var(--clr-bg-secondary);">
+              <div class="card-title mb-md text-sm">
+                <div class="card-icon icon-teal" style="width:24px;height:24px;font-size:0.7rem;">h₁</div>
+                Misplaced Tiles Heuristic
+              </div>
+              <div class="info-row">
+                <span class="info-key">Last Run — Solution Found</span>
+                <span id="bench-h1-found" class="info-val">Run solver to measure</span>
+              </div>
+              <div class="info-row">
+                <span class="info-key">Nodes Expanded</span>
+                <span id="bench-h1-expanded" class="info-val">—</span>
+              </div>
+              <div class="info-row">
+                <span class="info-key">Solution Moves</span>
+                <span id="bench-h1-moves" class="info-val">—</span>
+              </div>
+              <div class="info-row">
+                <span class="info-key">Execution Time</span>
+                <span id="bench-h1-time" class="info-val">—</span>
+              </div>
+            </div>
+
+            <div class="card" style="background:var(--clr-bg-secondary);">
+              <div class="card-title mb-md text-sm">
+                <div class="card-icon icon-amber" style="width:24px;height:24px;font-size:0.7rem;">h₂</div>
+                Manhattan Distance Heuristic
+              </div>
+              <div class="info-row">
+                <span class="info-key">Last Run — Solution Found</span>
+                <span id="bench-h2-found" class="info-val">Run solver to measure</span>
+              </div>
+              <div class="info-row">
+                <span class="info-key">Nodes Expanded</span>
+                <span id="bench-h2-expanded" class="info-val">—</span>
+              </div>
+              <div class="info-row">
+                <span class="info-key">Solution Moves</span>
+                <span id="bench-h2-moves" class="info-val">—</span>
+              </div>
+              <div class="info-row">
+                <span class="info-key">Execution Time</span>
+                <span id="bench-h2-time" class="info-val">—</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="validation-msg warning show" style="display:flex;">
+            ⚠ Benchmark data updates when you run the solver. Results are actual measurements, not fabricated values.
+          </div>
+        </div>
+
+        <!-- Theoretical Comparison Table -->
+        <div class="card mb-xl">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon icon-purple">📈</div>
+              Algorithm Property Comparison
+            </div>
+          </div>
+
+          <div class="validation-msg info show mb-md" style="display:flex; background:rgba(79,142,247,0.08); color:var(--clr-accent-primary); border-color:rgba(79,142,247,0.2);">
+            ℹ GBFS row shows actual measured data (when run). All other algorithm rows show standard textbook theoretical properties.
+          </div>
+
+          <div class="perf-table-wrapper">
+            <table class="perf-table" role="table" aria-label="Algorithm comparison table">
+              <thead>
+                <tr>
+                  <th>Algorithm</th>
+                  <th>f(n)</th>
+                  <th>Complete</th>
+                  <th>Optimal</th>
+                  <th>Time</th>
+                  <th>Space</th>
+                  <th>Solution</th>
+                  <th>Nodes Expanded</th>
+                  <th>Data Source</th>
+                </tr>
+              </thead>
+              <tbody id="comparison-table-body">
+                <!-- Populated by app.js -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Key Observations -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon icon-teal">💡</div>
+              Key Observations
+            </div>
+          </div>
+          <div class="grid-2">
+            <div>
+              <h4 class="text-accent" style="font-size:0.9rem; margin-bottom:8px;">Why GBFS varies by puzzle</h4>
+              <ul style="font-size:0.82rem; color:var(--clr-text-secondary); padding-left:16px; line-height:2;">
+                <li>Performance depends heavily on the heuristic quality</li>
+                <li>Manhattan Distance typically outperforms Misplaced Tiles</li>
+                <li>GBFS may explore more nodes on "deceptive" puzzles</li>
+                <li>Tie-breaking rules affect the exact expansion order</li>
+              </ul>
+            </div>
+            <div>
+              <h4 class="text-teal" style="font-size:0.9rem; margin-bottom:8px;">GBFS vs A* Trade-offs</h4>
+              <ul style="font-size:0.82rem; color:var(--clr-text-secondary); padding-left:16px; line-height:2;">
+                <li>GBFS is typically faster than A* (ignores g(n))</li>
+                <li>A* guarantees optimal solutions; GBFS does not</li>
+                <li>GBFS uses less memory in practice for good heuristics</li>
+                <li>A* is complete; GBFS is not in infinite spaces</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ═══════════════════════════════════════════
+           PAGE 5: ALGORITHM INFORMATION
+      ════════════════════════════════════════════ -->
+      <section id="page-algorithm" class="page-section" aria-label="Algorithm Information">
+
+        <div class="section-header">
+          <div class="section-eyebrow">Academic Documentation</div>
+          <h2 class="section-title">Algorithm Information</h2>
+          <p class="section-desc">Detailed explanation of Greedy Best-First Search appropriate for undergraduate AI study.</p>
+        </div>
+
+        <!-- GBFS Overview -->
+        <div class="card mb-xl">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon icon-blue">⚡</div>
+              Greedy Best-First Search (GBFS)
+            </div>
+            <span class="badge badge-gbfs">Assigned Algorithm</span>
+          </div>
+
+          <div class="algo-info-grid mb-lg">
+            <div class="complexity-card">
+              <div class="complexity-label">Evaluation Function</div>
+              <div class="complexity-value" id="gbfs-eval-fn">f(n) = h(n)</div>
+            </div>
+            <div class="complexity-card">
+              <div class="complexity-label">Time Complexity</div>
+              <div class="complexity-value" id="gbfs-time-complexity">O(b^m)</div>
+            </div>
+            <div class="complexity-card">
+              <div class="complexity-label">Space Complexity</div>
+              <div class="complexity-value" id="gbfs-space-complexity">O(b^m)</div>
+            </div>
+            <div class="complexity-card" style="grid-column: 1 / -1; display:grid; grid-template-columns:1fr 1fr; gap:16px;">
+              <div>
+                <div class="complexity-label">Complete?</div>
+                <div class="complexity-value" style="color:var(--clr-accent-rose); font-size:1rem;" id="gbfs-complete">No</div>
+                <div class="text-xs text-muted mt-sm" id="gbfs-complete-note">Not complete in infinite spaces.</div>
+              </div>
+              <div>
+                <div class="complexity-label">Optimal?</div>
+                <div class="complexity-value" style="color:var(--clr-accent-rose); font-size:1rem;" id="gbfs-optimal">No</div>
+                <div class="text-xs text-muted mt-sm" id="gbfs-optimal-note">GBFS may find a longer path.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Explanation -->
+          <div class="timeline">
+            <div class="timeline-item">
+              <div class="timeline-title">1. What is GBFS?</div>
+              <div class="timeline-body">Greedy Best-First Search is a heuristic search algorithm that selects the next node to expand based <em>solely</em> on the heuristic function h(n). Unlike A*, it does not consider the cost already incurred to reach the current node (g(n)). The evaluation function is simply <code>f(n) = h(n)</code>.</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-title">2. How GBFS Selects the Next Node</div>
+              <div class="timeline-body">GBFS maintains a priority queue (the frontier/open list) ordered by h(n). At each step, it dequeues the node with the <em>lowest h(n)</em> value — the node that appears "closest" to the goal according to the heuristic. This greedy strategy gives it its name.</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-title">3. The Priority Queue (Frontier)</div>
+              <div class="timeline-body">The frontier is implemented as a binary min-heap ordered by h(n). Insertion is O(log n). Extraction of the minimum is O(log n). Tie-breaking is deterministic (FIFO by insertion order). Nodes already in the explored set are never re-added.</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-title">4. The Explored Set (Closed List)</div>
+              <div class="timeline-body">To prevent re-expansion of states, GBFS maintains a hash set of explored state keys (string representations of the tile array). Before expanding successors, each successor's key is checked against the explored set. If found, the successor is discarded.</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-title">5. Why GBFS is NOT Optimal</div>
+              <div class="timeline-body">Because GBFS ignores g(n), it may take a longer path to the goal. The heuristic guides it toward the goal quickly, but the path taken may not be the shortest. A puzzle with a deceptive heuristic landscape can cause GBFS to find a suboptimal solution or get stuck in a local minimum.</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-title">6. Why GBFS is NOT Complete in Infinite Spaces</div>
+              <div class="timeline-body">In an infinite search space, GBFS can get trapped in an infinite loop following states that appear closer to the goal but lead away from it. With a finite state space and a closed list (explored set), GBFS becomes complete — it will not re-expand states.</div>
+            </div>
+            <div class="timeline-item">
+              <div class="timeline-title">7. Heuristic Quality Influence</div>
+              <div class="timeline-body">The quality of the heuristic strongly influences GBFS performance. A perfect heuristic (h(n) = h*(n)) makes GBFS run in linear time. A weak heuristic (e.g., h(n) = 0) degrades GBFS to BFS. Manhattan Distance dominates Misplaced Tiles and generally causes fewer node expansions.</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- GBFS vs A* -->
+        <div class="card mb-xl">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon icon-amber">⚖️</div>
+              GBFS vs A* — Key Distinction
+            </div>
+          </div>
+          <div class="grid-2">
+            <div class="card" style="background:rgba(79,142,247,0.05); border-color:rgba(79,142,247,0.3);">
+              <div class="text-accent fw-bold mb-sm">⚡ Greedy Best-First Search</div>
+              <div class="code-block mb-md" id="gbfs-vs-astar-gbfs">f(n) = h(n)</div>
+              <ul style="font-size:0.82rem; color:var(--clr-text-secondary); padding-left:16px; line-height:2;">
+                <li>Only uses heuristic estimate h(n)</li>
+                <li>Ignores path cost g(n)</li>
+                <li>Fast but not optimal</li>
+                <li>Not complete in infinite spaces</li>
+                <li>Memory: stores full frontier</li>
+              </ul>
+            </div>
+            <div class="card" style="background:rgba(0,212,170,0.04); border-color:rgba(0,212,170,0.2);">
+              <div class="text-teal fw-bold mb-sm">🌟 A* Search</div>
+              <div class="code-block mb-md" id="gbfs-vs-astar-astar">f(n) = g(n) + h(n)</div>
+              <ul style="font-size:0.82rem; color:var(--clr-text-secondary); padding-left:16px; line-height:2;">
+                <li>Balances path cost g(n) and heuristic h(n)</li>
+                <li>Optimal with admissible heuristic</li>
+                <li>Complete with admissible heuristic</li>
+                <li>Expands fewer nodes than BFS</li>
+                <li>More memory-intensive than GBFS</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Heuristics Detail -->
+        <div class="card mb-xl">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon icon-teal">📐</div>
+              Heuristic Functions — Mathematical Detail
+            </div>
+          </div>
+          <div class="grid-2">
+            <div>
+              <h4 class="text-accent mb-sm">h₁: Misplaced Tiles</h4>
+              <div class="code-block mb-md">h₁(n) = Σ [tile_i ≠ goal_i AND tile_i ≠ 0]<br/>for i = 0..8</div>
+              <p class="text-sm mb-md">Count the number of non-blank tiles not in their goal position. Each such tile requires at least one move to reach its goal, making this heuristic <strong>admissible</strong> (never overestimates).</p>
+              <div class="card" style="background:var(--clr-bg-secondary);">
+                <div class="text-xs fw-bold text-amber mb-sm">Example</div>
+                <div class="code-block" style="font-size:0.72rem;">
+Current: [1,2,3,4,0,5,7,8,6]<br/>
+Goal:    [1,2,3,4,5,6,7,8,0]<br/>
+Misplaced: tiles 5,6,8,0→ h₁ = 3
+                </div>
+              </div>
+            </div>
+            <div>
+              <h4 class="text-amber mb-sm">h₂: Manhattan Distance</h4>
+              <div class="code-block mb-md">h₂(n) = Σ (|currRow(t)-goalRow(t)|<br/>         + |currCol(t)-goalCol(t)|)<br/>for each tile t ≠ 0</div>
+              <p class="text-sm mb-md">For each tile, sum the minimum number of moves needed to reach its goal position moving only horizontally and vertically. <strong>Dominates</strong> Misplaced Tiles (h₂(n) ≥ h₁(n) always).</p>
+              <div class="card" style="background:var(--clr-bg-secondary);">
+                <div class="text-xs fw-bold text-amber mb-sm">Example</div>
+                <div class="code-block" style="font-size:0.72rem;">
+Current: [1,2,3,4,0,5,7,8,6]<br/>
+Goal:    [1,2,3,4,5,6,7,8,0]<br/>
+Tile 5: pos(1,2)→goal(1,1) = 1<br/>
+Tile 6: pos(2,2)→goal(1,2) = 1<br/>
+Tile 8: pos(2,1)→goal(2,1) = 0<br/>
+h₂ = 1+1+0+... = 2
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Algorithm Pseudocode -->
+        <div class="card mb-xl">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon icon-purple">💻</div>
+              GBFS Pseudocode
+            </div>
+          </div>
+          <div class="code-block">
+<span class="keyword">function</span> <span class="function">GBFS</span>(initial, goal, heuristic):
+  frontier = <span class="function">PriorityQueue</span>()
+  frontier.<span class="function">push</span>(h(initial, goal), initial)
+  explored = <span class="function">Set</span>()
+
+  <span class="keyword">while</span> frontier <span class="keyword">is not</span> empty:
+    node = frontier.<span class="function">pop</span>()     <span class="comment">// Remove node with lowest h(n)</span>
+
+    <span class="keyword">if</span> node <span class="keyword">is</span> goal:
+      <span class="keyword">return</span> <span class="function">reconstruct_path</span>(node)
+
+    <span class="keyword">if</span> node <span class="keyword">in</span> explored:
+      <span class="keyword">continue</span>
+
+    explored.<span class="function">add</span>(node)
+
+    <span class="keyword">for each</span> successor <span class="keyword">in</span> <span class="function">expand</span>(node):
+      <span class="keyword">if</span> successor <span class="keyword">not in</span> explored <span class="keyword">and</span> successor <span class="keyword">not in</span> frontier:
+        hVal = <span class="function">h</span>(successor, goal)    <span class="comment">// f(n) = h(n) ONLY (no g(n))</span>
+        frontier.<span class="function">push</span>(hVal, successor)
+
+  <span class="keyword">return</span> FAILURE    <span class="comment">// No solution found</span>
+          </div>
+          <div class="card mt-md" style="background:rgba(245,166,35,0.05); border-color:rgba(245,166,35,0.2);">
+            <div class="text-amber fw-bold text-sm mb-sm">⚠ Key Distinction from A*</div>
+            <p class="text-sm">In the code above, <code>frontier.push(hVal, successor)</code> uses <strong>only h(n)</strong> as the priority. A* would use <code>frontier.push(g(successor) + h(successor, goal), successor)</code> — adding the path cost g(n). This single difference makes A* optimal and GBFS not optimal.</p>
+          </div>
+        </div>
+
+        <!-- Other Algorithms Reference -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon icon-rose">📚</div>
+              Other Search Algorithms — Theoretical Reference
+            </div>
+          </div>
+          <div class="grid-2">
+            <div class="card" style="background:var(--clr-bg-secondary);">
+              <h4 style="font-size:0.9rem; margin-bottom:8px;">BFS — Breadth-First Search</h4>
+              <div class="code-block mb-sm" style="font-size:0.72rem;">f(n) = depth(n) | FIFO queue</div>
+              <p class="text-xs text-muted">Complete and optimal (unit costs). Explores level by level. High memory usage O(b^d).</p>
+            </div>
+            <div class="card" style="background:var(--clr-bg-secondary);">
+              <h4 style="font-size:0.9rem; margin-bottom:8px;">DFS — Depth-First Search</h4>
+              <div class="code-block mb-sm" style="font-size:0.72rem;">f(n) = depth(n) | LIFO stack</div>
+              <p class="text-xs text-muted">Not complete (loops), not optimal. Low memory O(bm) but can miss solutions.</p>
+            </div>
+            <div class="card" style="background:var(--clr-bg-secondary);">
+              <h4 style="font-size:0.9rem; margin-bottom:8px;">DLS — Depth-Limited Search</h4>
+              <div class="code-block mb-sm" style="font-size:0.72rem;">DFS with cutoff depth l</div>
+              <p class="text-xs text-muted">Incomplete if solution depth &gt; l. Useful when upper bound on depth is known.</p>
+            </div>
+            <div class="card" style="background:var(--clr-bg-secondary);">
+              <h4 style="font-size:0.9rem; margin-bottom:8px;">IDDFS — Iterative Deepening</h4>
+              <div class="code-block mb-sm" style="font-size:0.72rem;">Repeat DLS with l = 0,1,2,...</div>
+              <p class="text-xs text-muted">Complete and optimal (unit costs). Combines DFS memory efficiency with BFS completeness.</p>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ═══════════════════════════════════════════
+           PAGE 6: ABOUT
+      ════════════════════════════════════════════ -->
+      <section id="page-about" class="page-section" aria-label="About the Project">
+
+        <div class="section-header">
+          <div class="section-eyebrow">Project Documentation</div>
+          <h2 class="section-title">About the Project</h2>
+        </div>
+
+        <div class="about-grid mb-xl">
+          <!-- Left column -->
+          <div>
+            <div style="width:120px;height:120px;background:var(--grad-primary);border-radius:var(--radius-xl);display:flex;align-items:center;justify-content:center;font-size:3rem;margin-bottom:16px;box-shadow:var(--shadow-glow-primary);">🧩</div>
+            <h3 style="font-size:1.1rem; margin-bottom:8px;">AI-8Puzzle-Visualizer</h3>
+            <p class="text-sm text-muted mb-md">An interactive academic tool for exploring heuristic AI search algorithms.</p>
+            <div class="card" style="background:var(--clr-bg-secondary);">
+              <div class="info-row">
+                <span class="info-key">Registration</span>
+                <span class="info-val text-mono text-teal">24BCI0212</span>
+              </div>
+              <div class="info-row">
+                <span class="info-key">Course</span>
+                <span class="info-val">Artificial Intelligence</span>
+              </div>
+              <div class="info-row">
+                <span class="info-key">Algorithm</span>
+                <span class="info-val text-accent">GBFS</span>
+              </div>
+              <div class="info-row">
+                <span class="info-key">Version</span>
+                <span class="info-val text-mono">1.0.0</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right column -->
+          <div>
+            <div class="card mb-lg">
+              <div class="card-header">
+                <div class="card-title">
+                  <div class="card-icon icon-blue">📋</div>
+                  Project Description
+                </div>
+              </div>
+              <p class="mb-md">This project implements the <strong>Greedy Best-First Search (GBFS)</strong> algorithm to solve the classic <strong>8-Puzzle problem</strong> with a complete interactive visualization interface.</p>
+              <p class="mb-md">The application provides step-by-step visualization of the search process, including frontier management, explored state tracking, heuristic value display, and solution path reconstruction.</p>
+              <p>Two admissible heuristics are implemented: <strong>Misplaced Tiles (h₁)</strong> and <strong>Manhattan Distance (h₂)</strong>, allowing users to compare their effect on search performance.</p>
+            </div>
+
+            <div class="card mb-lg">
+              <div class="card-header">
+                <div class="card-title">
+                  <div class="card-icon icon-teal">💻</div>
+                  Technology Stack
+                </div>
+              </div>
+              <div class="tech-stack-grid">
+                <div class="tech-chip"><span class="tech-icon">🌐</span>HTML5</div>
+                <div class="tech-chip"><span class="tech-icon">🎨</span>CSS3</div>
+                <div class="tech-chip"><span class="tech-icon">⚡</span>JavaScript</div>
+                <div class="tech-chip"><span class="tech-icon">🌬️</span>Tailwind</div>
+                <div class="tech-chip"><span class="tech-icon">📦</span>ES Modules</div>
+                <div class="tech-chip"><span class="tech-icon">🔧</span>Git</div>
+                <div class="tech-chip"><span class="tech-icon">🚀</span>GitHub Pages</div>
+                <div class="tech-chip"><span class="tech-icon">🤖</span>GBFS</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- File Structure -->
+        <div class="card mb-xl">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon icon-amber">📁</div>
+              Project Structure
+            </div>
+          </div>
+          <div class="code-block">
+AI-8Puzzle-Visualizer/
+├── index.html              <span class="comment"># Single-page application</span>
+├── css/
+│   └── styles.css          <span class="comment"># Premium dark dashboard stylesheet</span>
+├── js/
+│   ├── puzzle.js           <span class="comment"># Board model, validation, solvability</span>
+│   ├── heuristics.js       <span class="comment"># h₁ Misplaced Tiles, h₂ Manhattan Distance</span>
+│   ├── gbfs.js             <span class="comment"># GBFS algorithm + Priority Queue</span>
+│   ├── visualizer.js       <span class="comment"># DOM rendering, animation, input grids</span>
+│   ├── statistics.js       <span class="comment"># Performance measurement and formatting</span>
+│   └── app.js              <span class="comment"># Main controller, navigation, events</span>
+├── tests/
+│   ├── puzzle.test.js      <span class="comment"># Board validation and successor tests</span>
+│   ├── heuristics.test.js  <span class="comment"># Heuristic function unit tests</span>
+│   └── gbfs.test.js        <span class="comment"># GBFS algorithm integration tests</span>
+├── docs/
+│   ├── algorithm-explanation.md
+│   └── testing.md
+├── assets/images/          <span class="comment"># Project assets</span>
+├── .github/workflows/
+│   └── deploy.yml          <span class="comment"># GitHub Pages deployment</span>
+└── README.md
+          </div>
+        </div>
+
+        <!-- References -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">
+              <div class="card-icon icon-purple">📚</div>
+              References
+            </div>
+          </div>
+          <ul style="font-size:0.85rem; color:var(--clr-text-secondary); padding-left:16px; line-height:2.5;">
+            <li>Russell, S. J., &amp; Norvig, P. (2020). <em>Artificial Intelligence: A Modern Approach</em> (4th ed.). Pearson. [Chapter 3: Solving Problems by Searching]</li>
+            <li>Hart, P. E., Nilsson, N. J., &amp; Raphael, B. (1968). A formal basis for the heuristic determination of minimum cost paths. <em>IEEE Transactions on Systems Science and Cybernetics</em>, 4(2), 100-107.</li>
+            <li>Nilsson, N. J. (1998). <em>Artificial Intelligence: A New Synthesis</em>. Morgan Kaufmann.</li>
+            <li>MDN Web Docs. (2024). JavaScript ES6 Modules. Mozilla Developer Network.</li>
+            <li>Pohl, I. (1970). First results on the effect of error in heuristic search. <em>Machine Intelligence</em>, 5, 219-236.</li>
+          </ul>
+        </div>
+
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" aria-live="polite" role="status"></div>
+
+  <!-- ══════════════════════════════════════════════
+       INLINE SCRIPTS: Preset loader, Tab fix, Nav
+  ══════════════════════════════════════════════ -->
+  <script>
+    // Preset puzzle configurations
+    const PRESETS = {
+      easy:   { initial: [1,2,3,4,5,6,7,0,8], goal: [1,2,3,4,5,6,7,8,0] },
+      medium: { initial: [2,8,3,1,6,4,7,0,5], goal: [1,2,3,8,0,4,7,6,5] },
+      hard:   { initial: [5,1,2,4,0,3,7,8,6], goal: [1,2,3,4,5,6,7,8,0] },
+      goal:   { initial: [1,2,3,4,5,6,7,8,0], goal: [1,2,3,4,5,6,7,8,0] },
+    };
+
+    function loadPreset(name) {
+      const preset = PRESETS[name];
+      if (!preset) return;
+
+      // Update grid inputs
+      const setGrid = (id, values) => {
+        const inputs = document.querySelectorAll(`#${id} input`);
+        values.forEach((v, i) => { if (inputs[i]) inputs[i].value = v; });
+      };
+
+      setGrid('initial-input-grid', preset.initial);
+      setGrid('goal-input-grid',    preset.goal);
+
+      // Trigger apply
+      setTimeout(() => document.getElementById('btn-apply-input')?.click(), 50);
+
+      const labels = { easy:'Easy', medium:'Medium', hard:'Hard', goal:'Goal State' };
+      console.log(`Preset loaded: ${labels[name]}`);
+    }
+
+    // Fix tab switching (supplementary, before app.js loads)
+    document.addEventListener('click', function(e) {
+      const btn = e.target.closest('.tab-btn');
+      if (!btn) return;
+      const group = btn.dataset.tabGroup;
+      const tab   = btn.dataset.tab;
+      if (!group || !tab) return;
+
+      document.querySelectorAll(`[data-tab-group="${group}"]`).forEach(b => b.classList.toggle('active', b === btn));
+      document.querySelectorAll(`[data-tab-content-group="${group}"]`).forEach(c => {
+        c.classList.toggle('active', c.dataset.tabContent === tab);
+      });
+    });
+
+    // Quick solve button nav
+    document.getElementById('btn-quick-solve')?.addEventListener('click', function() {
+      document.querySelector('[data-page="solver"]')?.click();
+    });
+
+    // Heuristic info update
+    document.getElementById('heuristic-select')?.addEventListener('change', function(e) {
+      const info = {
+        manhattan: '<strong class="text-accent">Manhattan Distance</strong> — Sum of horizontal and vertical distances each tile must travel to its goal position. Admissible and consistent. More informed than Misplaced Tiles.',
+        misplaced: '<strong class="text-amber">Misplaced Tiles</strong> — Count of tiles not in their goal position (blank excluded). Admissible and consistent. Simpler but less informed than Manhattan Distance.',
+      };
+      const el = document.getElementById('heuristic-info-text');
+      if (el) el.innerHTML = info[e.target.value] || '';
+    });
+  </script>
+
+  <!-- ES Module: Main Application -->
+  <script type="module" src="js/app.js"></script>
+
+</body>
+</html>

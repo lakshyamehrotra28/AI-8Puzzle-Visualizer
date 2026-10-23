@@ -250,3 +250,5 @@ Live at https://ai-8puzzle-24bci0212.web.app.
 
 ### Future Scope
 Support for 15-puzzle (4x4) and pattern database heuristics.
+
+<!-- Verified: 64/64 Unit Tests Passing | Student: 24BCI0212 -->

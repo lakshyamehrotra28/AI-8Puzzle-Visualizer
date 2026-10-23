@@ -271,3 +271,7 @@ Since each slide move changes either the row or column of a tile by at most 1, e
 
 ### Admissibility Proof for Misplaced Tiles
 Each misplaced tile t (where tile_t != goal_t and t != 0) is not in its goal cell and must be moved at least once. Since a single move moves exactly one numbered tile, h1(n) <= h*(n).
+
+
+### Heuristic Dominance Proof
+For any non-blank tile t that is misplaced, its distance |r - r_goal| + |c - c_goal| >= 1. Summing over all misplaced tiles gives h2(n) >= h1(n). Hence h2 dominates h1.

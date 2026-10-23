@@ -415,3 +415,7 @@ Answer: It records expanded state signatures, preventing the algorithm from revi
 
 #### Viva Q18: Why use a Binary Min-Heap for the Open List?
 Answer: It provides O(log N) insertion and O(log N) extract-min operations, ensuring rapid node retrieval.
+
+
+#### Viva Q19: How is the solution path reconstructed?
+Answer: Each node maintains a back-pointer to its parent. Once the goal test passes, pointers are traced back to the root.

@@ -419,3 +419,7 @@ Answer: It provides O(log N) insertion and O(log N) extract-min operations, ensu
 
 #### Viva Q19: How is the solution path reconstructed?
 Answer: Each node maintains a back-pointer to its parent. Once the goal test passes, pointers are traced back to the root.
+
+
+#### Viva Q20: Why does sliding a tile preserve inversion parity?
+Answer: Horizontal moves do not change relative tile order; vertical moves skip over 2 tiles, changing inversions by 0, +2, or -2.

@@ -226,3 +226,6 @@ Step-by-step script for conducting faculty viva presentations.
 
 ### Keyboard Shortcuts
 Space: Play/Pause | ArrowRight: Next Step | ArrowLeft: Previous Step | R: Reset.
+
+### Mobile Support
+Fully responsive on iOS and Android devices with touch-friendly controls.

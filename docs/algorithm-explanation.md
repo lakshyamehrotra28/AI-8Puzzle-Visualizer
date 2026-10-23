@@ -263,3 +263,7 @@ A state space graph G = (V, E) where vertices V are valid permutations of 0..8 a
 
 ### State Space Diameter
 Reinefeld (1993) proved through exhaustive search that the maximum distance between any two reachable states in the 8-puzzle is exactly 31 moves (God Number for 8-puzzle).
+
+
+### Admissibility Proof for Manhattan Distance
+Since each slide move changes either the row or column of a tile by at most 1, each tile t requires at least |r(t) - r_goal(t)| + |c(t) - c_goal(t)| moves to reach its goal position. Since no move can move two tiles closer simultaneously, h2(n) <= h*(n).

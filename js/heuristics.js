@@ -174,6 +174,47 @@ export function compareHeuristics(tiles, goalTiles) {
   };
 }
 
+/**
+ * Granular tile-by-tile heuristic diagnostic breakdown.
+ * Generates coordinate analysis for educational inspection in the UI and Viva demonstration.
+ *
+ * @param {number[]} tiles     - Current board
+ * @param {number[]} goalTiles - Target goal board
+ * @returns {Array<{tile: number, currentPos: [number, number], goalPos: [number, number], isMisplaced: boolean, manhattanDist: number}>}
+ */
+export function getTileBreakdown(tiles, goalTiles) {
+  const goalMap = buildGoalPositionMap(goalTiles);
+  const breakdown = [];
+
+  for (let i = 0; i < tiles.length; i++) {
+    const tile = tiles[i];
+    if (tile === BLANK_TILE) continue;
+
+    const goalIdx = goalMap.get(tile);
+    const currRow = Math.floor(i / BOARD_SIZE);
+    const currCol = i % BOARD_SIZE;
+    const goalRow = goalIdx !== undefined ? Math.floor(goalIdx / BOARD_SIZE) : -1;
+    const goalCol = goalIdx !== undefined ? goalIdx % BOARD_SIZE : -1;
+
+    const isMisplaced = i !== goalIdx;
+    const manhattanDist = (goalIdx !== undefined)
+      ? Math.abs(currRow - goalRow) + Math.abs(currCol - goalCol)
+      : 0;
+
+    breakdown.push({
+      tile,
+      currentPos: [currRow, currCol],
+      goalPos: [goalRow, goalCol],
+      isMisplaced,
+      manhattanDist
+    });
+  }
+
+  // Sort by tile number 1..8
+  breakdown.sort((a, b) => a.tile - b.tile);
+  return breakdown;
+}
+
 // ── Verify Admissibility (helper for tests) ────────────────
 
 /**
@@ -195,5 +236,6 @@ export default {
   computeHeuristic,
   getHeuristicInfo,
   compareHeuristics,
+  getTileBreakdown,
   isAdmissible,
 };

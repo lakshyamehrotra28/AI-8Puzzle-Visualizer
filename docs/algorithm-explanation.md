@@ -355,3 +355,7 @@ Answer: No. Because GBFS considers only f(n) = h(n) and ignores path cost g(n), 
 
 #### Viva Q3: Is GBFS complete?
 Answer: Not complete in general infinite graphs; complete in finite state spaces with repeated-state checking.
+
+
+#### Viva Q4: How does GBFS differ from A*?
+Answer: A* uses f(n) = g(n) + h(n), while GBFS uses f(n) = h(n) purely.

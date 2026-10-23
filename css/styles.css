@@ -726,3 +726,6 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
 .puzzle-tile.in-place { border-color: #10b981 !important; }
 
 .metric-highlight { background: linear-gradient(135deg, rgba(79,142,247,0.1), rgba(16,185,129,0.1)); }
+
+@keyframes toastSlide { from { transform: translateX(100%); } to { transform: translateX(0); } }
+.toast { animation: toastSlide 0.25s ease-out; }

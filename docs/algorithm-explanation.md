@@ -431,3 +431,7 @@ Answer: Minimum 2 (corners), 3 (edges), maximum 4 (center). Average branching fa
 
 #### Viva Q22: What occurs if initial state equals goal state?
 Answer: The algorithm identifies the match on initialization and immediately returns a path of length 1 without expanding nodes.
+
+
+#### Viva Q23: Why does a more informed heuristic reduce search time?
+Answer: Higher heuristic values prune unpromising subtrees, concentrating search along the direct path to the goal.

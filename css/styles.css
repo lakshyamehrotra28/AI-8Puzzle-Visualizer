@@ -737,3 +737,5 @@ input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.2); }
 .comparison-table tbody tr:hover { background: rgba(255,255,255,0.02); }
 
 .nav-item.active { border-left: 3px solid #4f8ef7; }
+
+.info-val { font-variant-numeric: tabular-nums; }

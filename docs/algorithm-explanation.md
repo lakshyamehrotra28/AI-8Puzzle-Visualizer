@@ -423,3 +423,7 @@ Answer: Each node maintains a back-pointer to its parent. Once the goal test pas
 
 #### Viva Q20: Why does sliding a tile preserve inversion parity?
 Answer: Horizontal moves do not change relative tile order; vertical moves skip over 2 tiles, changing inversions by 0, +2, or -2.
+
+
+#### Viva Q21: What is the branching factor range in 8-puzzle?
+Answer: Minimum 2 (corners), 3 (edges), maximum 4 (center). Average branching factor is approximately 2.67.

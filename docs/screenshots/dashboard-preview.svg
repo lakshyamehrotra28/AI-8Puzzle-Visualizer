@@ -1,0 +1,178 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 700" width="100%" height="100%">
+  <defs>
+    <linearGradient id="appBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0e1a"/>
+      <stop offset="100%" stop-color="#121829"/>
+    </linearGradient>
+    <linearGradient id="cardGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#161f36"/>
+      <stop offset="100%" stop-color="#0f1626"/>
+    </linearGradient>
+    <linearGradient id="tileGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="100%" stop-color="#1d4ed8"/>
+    </linearGradient>
+    <linearGradient id="tileCorrect" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#10b981"/>
+      <stop offset="100%" stop-color="#047857"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="1200" height="700" rx="16" fill="url(#appBg)"/>
+  <rect x="2" y="2" width="1196" height="696" rx="14" fill="none" stroke="#25324e" stroke-width="2"/>
+
+  <!-- Left Sidebar Navigation -->
+  <rect x="0" y="0" width="240" height="700" rx="16" fill="#0d1221"/>
+  <line x1="240" y1="0" x2="240" y2="700" stroke="#1f293d" stroke-width="1.5"/>
+
+  <!-- Logo -->
+  <text x="30" y="45" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="20" font-weight="bold" fill="#ffffff">🧩 AI-8Puzzle</text>
+  <text x="30" y="65" font-family="sans-serif" font-size="11" fill="#4f8ef7">GBFS Visualizer v1.0</text>
+
+  <!-- Sidebar Nav items -->
+  <g transform="translate(20, 100)">
+    <rect width="200" height="40" rx="8" fill="#1e293b"/>
+    <text x="35" y="25" font-family="sans-serif" font-size="13" font-weight="600" fill="#38bdf8">🏠  Home</text>
+
+    <text x="35" y="70" font-family="sans-serif" font-size="13" fill="#94a3b8">🎯  Puzzle Solver</text>
+    <text x="35" y="115" font-family="sans-serif" font-size="13" fill="#94a3b8">📊  Search Tree</text>
+    <text x="35" y="160" font-family="sans-serif" font-size="13" fill="#94a3b8">📈  Performance</text>
+    <text x="35" y="205" font-family="sans-serif" font-size="13" fill="#94a3b8">🔬  Algorithm Info</text>
+    <text x="35" y="250" font-family="sans-serif" font-size="13" fill="#94a3b8">📋  About</text>
+  </g>
+
+  <!-- Sidebar Student Badge -->
+  <g transform="translate(20, 600)">
+    <rect width="200" height="70" rx="10" fill="#161f36" stroke="#2d3b5b" stroke-width="1"/>
+    <text x="100" y="24" font-family="monospace" font-size="13" font-weight="bold" fill="#38bdf8" text-anchor="middle">Reg: 24BCI0212</text>
+    <text x="100" y="44" font-family="sans-serif" font-size="11" fill="#cbd5e1" text-anchor="middle">Algorithm: GBFS</text>
+    <text x="100" y="60" font-family="sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">Course: Artificial Intelligence</text>
+  </g>
+
+  <!-- Main Content Area -->
+  <!-- Top Bar -->
+  <g transform="translate(270, 30)">
+    <text x="0" y="25" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-size="24" font-weight="bold" fill="#ffffff">Interactive 8-Puzzle Visualizer</text>
+    <text x="0" y="48" font-family="sans-serif" font-size="13" fill="#8b9bb4">Greedy Best-First Search with Manhattan Distance (h₂) and Misplaced Tiles (h₁)</text>
+  </g>
+
+  <!-- Metrics Bar -->
+  <g transform="translate(270, 100)">
+    <!-- Metric 1 -->
+    <rect x="0" y="0" width="165" height="75" rx="10" fill="url(#cardGrad)" stroke="#1e293b"/>
+    <text x="15" y="25" font-family="sans-serif" font-size="11" fill="#94a3b8">Solution Status</text>
+    <text x="15" y="52" font-family="sans-serif" font-size="18" font-weight="bold" fill="#10b981">SOLVED ✓</text>
+
+    <!-- Metric 2 -->
+    <rect x="180" y="0" width="165" height="75" rx="10" fill="url(#cardGrad)" stroke="#1e293b"/>
+    <text x="195" y="25" font-family="sans-serif" font-size="11" fill="#94a3b8">Solution Depth</text>
+    <text x="195" y="52" font-family="monospace" font-size="20" font-weight="bold" fill="#38bdf8">3 Moves</text>
+
+    <!-- Metric 3 -->
+    <rect x="360" y="0" width="165" height="75" rx="10" fill="url(#cardGrad)" stroke="#1e293b"/>
+    <text x="375" y="25" font-family="sans-serif" font-size="11" fill="#94a3b8">Nodes Expanded</text>
+    <text x="375" y="52" font-family="monospace" font-size="20" font-weight="bold" fill="#f59e0b">4 Nodes</text>
+
+    <!-- Metric 4 -->
+    <rect x="540" y="0" width="165" height="75" rx="10" fill="url(#cardGrad)" stroke="#1e293b"/>
+    <text x="555" y="25" font-family="sans-serif" font-size="11" fill="#94a3b8">Execution Time</text>
+    <text x="555" y="52" font-family="monospace" font-size="20" font-weight="bold" fill="#a78bfa">0.42 ms</text>
+
+    <!-- Metric 5 -->
+    <rect x="720" y="0" width="165" height="75" rx="10" fill="url(#cardGrad)" stroke="#1e293b"/>
+    <text x="735" y="25" font-family="sans-serif" font-size="11" fill="#94a3b8">Branching (b*)</text>
+    <text x="735" y="52" font-family="monospace" font-size="20" font-weight="bold" fill="#ec4899">1.44</text>
+  </g>
+
+  <!-- Interactive 3x3 Puzzle Board Area -->
+  <g transform="translate(270, 205)">
+    <!-- Board Card -->
+    <rect width="440" height="460" rx="14" fill="url(#cardGrad)" stroke="#1e293b"/>
+    <text x="30" y="38" font-family="sans-serif" font-size="16" font-weight="bold" fill="#ffffff">State Space Visualizer Board</text>
+    <text x="30" y="58" font-family="sans-serif" font-size="12" fill="#94a3b8">Current Step: 2 / 3 | f(n) = h(n) = 1</text>
+
+    <!-- 3x3 Grid inside Board -->
+    <g transform="translate(60, 85)">
+      <rect width="320" height="320" rx="12" fill="#0c111e" stroke="#25324e" stroke-width="2"/>
+      <!-- Row 0 -->
+      <rect x="15" y="15" width="90" height="90" rx="8" fill="url(#tileCorrect)"/>
+      <text x="60" y="70" font-family="sans-serif" font-size="34" font-weight="bold" fill="#ffffff" text-anchor="middle">1</text>
+
+      <rect x="115" y="15" width="90" height="90" rx="8" fill="url(#tileCorrect)"/>
+      <text x="160" y="70" font-family="sans-serif" font-size="34" font-weight="bold" fill="#ffffff" text-anchor="middle">2</text>
+
+      <rect x="215" y="15" width="90" height="90" rx="8" fill="url(#tileCorrect)"/>
+      <text x="260" y="70" font-family="sans-serif" font-size="34" font-weight="bold" fill="#ffffff" text-anchor="middle">3</text>
+
+      <!-- Row 1 -->
+      <rect x="15" y="115" width="90" height="90" rx="8" fill="url(#tileCorrect)"/>
+      <text x="60" y="170" font-family="sans-serif" font-size="34" font-weight="bold" fill="#ffffff" text-anchor="middle">4</text>
+
+      <!-- Blank Tile -->
+      <rect x="115" y="115" width="90" height="90" rx="8" fill="#131d33" stroke="#38bdf8" stroke-dasharray="4,4"/>
+      <text x="160" y="165" font-family="sans-serif" font-size="11" fill="#38bdf8" text-anchor="middle">BLANK</text>
+
+      <rect x="215" y="115" width="90" height="90" rx="8" fill="url(#tileCorrect)"/>
+      <text x="260" y="170" font-family="sans-serif" font-size="34" font-weight="bold" fill="#ffffff" text-anchor="middle">5</text>
+
+      <!-- Row 2 -->
+      <rect x="15" y="215" width="90" height="90" rx="8" fill="url(#tileCorrect)"/>
+      <text x="60" y="270" font-family="sans-serif" font-size="34" font-weight="bold" fill="#ffffff" text-anchor="middle">7</text>
+
+      <rect x="115" y="215" width="90" height="90" rx="8" fill="url(#tileCorrect)"/>
+      <text x="160" y="270" font-family="sans-serif" font-size="34" font-weight="bold" fill="#ffffff" text-anchor="middle">8</text>
+
+      <rect x="215" y="215" width="90" height="90" rx="8" fill="url(#tileGrad)"/>
+      <text x="260" y="270" font-family="sans-serif" font-size="34" font-weight="bold" fill="#ffffff" text-anchor="middle">6</text>
+    </g>
+
+    <!-- Controls below -->
+    <g transform="translate(60, 420)">
+      <rect width="80" height="30" rx="6" fill="#2563eb"/>
+      <text x="40" y="20" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">▶ Play</text>
+
+      <rect x="90" y="0" width="70" height="30" rx="6" fill="#1e293b"/>
+      <text x="125" y="20" font-family="sans-serif" font-size="11" fill="#e2e8f0" text-anchor="middle">⏸ Pause</text>
+
+      <rect x="170" y="0" width="70" height="30" rx="6" fill="#1e293b"/>
+      <text x="205" y="20" font-family="sans-serif" font-size="11" fill="#e2e8f0" text-anchor="middle">⏮ Prev</text>
+
+      <rect x="250" y="0" width="70" height="30" rx="6" fill="#1e293b"/>
+      <text x="285" y="20" font-family="sans-serif" font-size="11" fill="#e2e8f0" text-anchor="middle">⏭ Next</text>
+    </g>
+  </g>
+
+  <!-- Right Panel: Algorithm & Frontier Inspector -->
+  <g transform="translate(730, 205)">
+    <!-- Right Card -->
+    <rect width="430" height="460" rx="14" fill="url(#cardGrad)" stroke="#1e293b"/>
+    <text x="25" y="38" font-family="sans-serif" font-size="16" font-weight="bold" fill="#ffffff">Frontier Open List (Min-Heap)</text>
+    <text x="25" y="58" font-family="sans-serif" font-size="12" fill="#94a3b8">Sorted by f(n) = h(n) | Deterministic FIFO tie-breaking</text>
+
+    <!-- Frontier Items -->
+    <g transform="translate(25, 80)">
+      <rect width="380" height="50" rx="8" fill="#131c30" stroke="#10b981" stroke-width="1.5"/>
+      <text x="15" y="28" font-family="monospace" font-size="12" fill="#ffffff">Node #1: [1,2,3,4,8,5,7,0,6]</text>
+      <text x="15" y="44" font-family="sans-serif" font-size="10" fill="#34d399">Priority: h(n) = 1 (Next to expand)</text>
+
+      <rect y="60" width="380" height="50" rx="8" fill="#131c30" stroke="#334155" stroke-width="1"/>
+      <text x="15" y="88" font-family="monospace" font-size="12" fill="#cbd5e1">Node #2: [1,2,3,4,5,0,7,8,6]</text>
+      <text x="15" y="104" font-family="sans-serif" font-size="10" fill="#94a3b8">Priority: h(n) = 2 (Queued)</text>
+
+      <rect y="120" width="380" height="50" rx="8" fill="#131c30" stroke="#334155" stroke-width="1"/>
+      <text x="15" y="148" font-family="monospace" font-size="12" fill="#cbd5e1">Node #3: [1,2,3,0,4,5,7,8,6]</text>
+      <text x="15" y="164" font-family="sans-serif" font-size="10" fill="#94a3b8">Priority: h(n) = 3 (Queued)</text>
+    </g>
+
+    <!-- Viva Note Callout -->
+    <g transform="translate(25, 275)">
+      <rect width="380" height="150" rx="10" fill="#131b2e" stroke="#2563eb" stroke-width="1"/>
+      <text x="20" y="30" font-family="sans-serif" font-size="14" font-weight="bold" fill="#60a5fa">Viva Quick Reference: GBFS vs A*</text>
+      <text x="20" y="55" font-family="sans-serif" font-size="11" fill="#cbd5e1">• GBFS uses f(n) = h(n); A* uses f(n) = g(n) + h(n).</text>
+      <text x="20" y="75" font-family="sans-serif" font-size="11" fill="#cbd5e1">• GBFS ignores path cost g(n) → Not guaranteed optimal.</text>
+      <text x="20" y="95" font-family="sans-serif" font-size="11" fill="#cbd5e1">• GBFS explores significantly fewer nodes on average.</text>
+      <text x="20" y="115" font-family="sans-serif" font-size="11" fill="#cbd5e1">• Manhattan Distance (h₂) dominates Misplaced Tiles (h₁).</text>
+      <text x="20" y="135" font-family="sans-serif" font-size="11" fill="#34d399">✓ Verified with Student Registration: 24BCI0212</text>
+    </g>
+  </g>
+</svg>

@@ -351,3 +351,7 @@ Answer: 9! = 362,880 total permutations, with exactly half (181,440) reachable f
 
 #### Viva Q2: Is Greedy Best-First Search optimal?
 Answer: No. Because GBFS considers only f(n) = h(n) and ignores path cost g(n), it may discover a longer path.
+
+
+#### Viva Q3: Is GBFS complete?
+Answer: Not complete in general infinite graphs; complete in finite state spaces with repeated-state checking.

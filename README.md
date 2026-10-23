@@ -220,3 +220,6 @@ Measured across 50 test instances on Node.js v20 / V8 JavaScript engine.
 
 ### Troubleshooting FAQ
 Common questions regarding solvability parity and browser caching.
+
+### Demonstration Walkthrough
+Step-by-step script for conducting faculty viva presentations.

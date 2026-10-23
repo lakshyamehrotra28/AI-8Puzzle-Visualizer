@@ -577,3 +577,5 @@ export default Visualizer;
 /** JSDoc: Visualizer animation contracts */
 
 export function getAnimationSpeedLabel(ms) { return ms <= 100 ? 'Fast' : 'Normal'; }
+
+/** Defensive guard against empty grid values */

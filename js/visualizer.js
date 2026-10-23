@@ -573,3 +573,5 @@ export function highlightInputGrid(containerId, validation) {
 }
 
 export default Visualizer;
+
+/** JSDoc: Visualizer animation contracts */

@@ -287,3 +287,7 @@ Answer: 9! = 362,880 total configurations, partitioned into two disjoint equival
 
 #### Viva Q2: Why is Greedy Best-First Search not guaranteed to find an optimal solution?
 Answer: GBFS evaluates states using f(n) = h(n) and ignores path cost g(n). It can greedily chase a state with low heuristic value even if the path taken to reach it is long or circuitous.
+
+
+#### Viva Q3: Under what conditions can GBFS fail to terminate in infinite spaces?
+Answer: Without repeated-state checking, GBFS can enter infinite loops or follow an infinite dead-end path with misleadingly low heuristic estimates.

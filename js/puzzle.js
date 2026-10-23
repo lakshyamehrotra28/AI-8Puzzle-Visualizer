@@ -342,3 +342,5 @@ export default PuzzleBoard;
 /** JSDoc: PuzzleBoard state inspection */
 
 PuzzleBoard.prototype.getManhattanEstimate = function(goal) { return 0; };
+
+PuzzleBoard.prototype.getMisplacedEstimate = function(goal) { return 0; };

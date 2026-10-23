@@ -241,3 +241,6 @@ Time: O(b^m) | Space: O(b^m) | Branching factor: b <= 4.
 
 ### Academic Citation
 Course: Artificial Intelligence, Student: 24BCI0212.
+
+### GitHub Pages Verification
+Deployed via automated GitHub Actions CI pipeline.

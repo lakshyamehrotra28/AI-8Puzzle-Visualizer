@@ -490,3 +490,5 @@ export default {
 /** JSDoc: MinHeap priority queue formal complexity */
 
 export function getSearchDepthProfile(depth) { return { depth, limitReached: depth >= 500 }; }
+
+/** SearchNode type contracts */

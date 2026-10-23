@@ -1,0 +1,33 @@
+{
+  "name": "ai-8puzzle-visualizer",
+  "version": "1.0.0",
+  "description": "Interactive 8-Puzzle Problem Solver using Greedy Best-First Search (GBFS) with step-by-step state space visualization, heuristics comparison, and performance benchmarks.",
+  "main": "js/app.js",
+  "type": "module",
+  "scripts": {
+    "test": "node tests/runner.js",
+    "test:puzzle": "node tests/puzzle.test.js",
+    "test:heuristics": "node tests/heuristics.test.js",
+    "test:gbfs": "node tests/gbfs.test.js",
+    "test:pq": "node tests/priority-queue.test.js",
+    "test:solvability": "node tests/solvability.test.js",
+    "test:validation": "node tests/validation.test.js"
+  },
+  "keywords": [
+    "8-puzzle",
+    "artificial-intelligence",
+    "gbfs",
+    "greedy-best-first-search",
+    "heuristics",
+    "manhattan-distance",
+    "misplaced-tiles",
+    "state-space-search",
+    "academic-visualizer"
+  ],
+  "author": "Student 24BCI0212",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/laksh/AI-8Puzzle-Visualizer.git"
+  }
+}

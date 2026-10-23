@@ -331,3 +331,7 @@ Exhaustive breadth-first verification by Reinefeld (1993) demonstrated that no r
 
 ### Admissibility Proof for h1(n)
 Every misplaced tile must be moved at least once. Since a single move displaces exactly one numbered tile, h1(n) <= h*(n).
+
+
+### Admissibility Proof for h2(n)
+Each tile t must travel at least |r(t) - r_goal(t)| + |c(t) - c_goal(t)| moves. Since no move can decrease distance for two tiles simultaneously, h2(n) <= h*(n).

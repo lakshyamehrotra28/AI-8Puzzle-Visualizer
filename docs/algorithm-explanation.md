@@ -299,3 +299,7 @@ Answer: A* uses f(n) = g(n) + h(n), balancing cost accumulated with cost remaini
 
 #### Viva Q5: How does tie-breaking affect GBFS performance?
 Answer: When multiple frontier nodes share the same h(n), tie-breaking decides expansion order. FIFO ensures deterministic reproducibility.
+
+
+#### Viva Q6: Why is the blank tile excluded from heuristic calculations?
+Answer: The blank tile does not represent a physical tile to be moved; moving any tile implicitly moves the blank. Counting the blank would double-count moves and violate admissibility.

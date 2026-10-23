@@ -323,3 +323,7 @@ Answer: O(b^m). GBFS keeps all generated nodes in the frontier/explored set, whi
 
 ### Graph-Theoretic State Space Formulation
 Let G = (V, E) be an undirected graph where V is the set of 181,440 reachable board states and E is the set of valid tile slide transitions.
+
+
+### God's Number for 8-Puzzle
+Exhaustive breadth-first verification by Reinefeld (1993) demonstrated that no reachable 8-puzzle configuration requires more than 31 moves to solve.

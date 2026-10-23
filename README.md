@@ -17,8 +17,8 @@ An interactive, high-performance web dashboard and visualizer for solving the cl
 - **Assignment:** Interactive 8-Puzzle Problem Solver using AI Search Algorithms
 - **Assigned Algorithm:** Greedy Best-First Search (GBFS)
 - **Project Title:** `AI-8Puzzle-Visualizer`
-- **GitHub Repository:** [https://github.com/laksh/AI-8Puzzle-Visualizer](https://github.com/laksh/AI-8Puzzle-Visualizer)
-- **GitHub Pages Live Deployment:** [https://laksh.github.io/AI-8Puzzle-Visualizer/](https://laksh.github.io/AI-8Puzzle-Visualizer/)
+- **GitHub Repository:** [https://github.com/lakshyamehrotra28/AI-8Puzzle-Visualizer](https://github.com/lakshyamehrotra28/AI-8Puzzle-Visualizer)
+- **GitHub Pages Live Deployment:** [https://lakshyamehrotra28.github.io/AI-8Puzzle-Visualizer/](https://lakshyamehrotra28.github.io/AI-8Puzzle-Visualizer/)
 
 ---
 

@@ -1,0 +1,17 @@
+{
+  "name": "ai-8puzzle-visualizer",
+  "version": "1.0.0",
+  "description": "Interactive 8-Puzzle Problem Solver using Greedy Best-First Search (GBFS)",
+  "type": "module",
+  "scripts": {
+    "dev": "npx -y serve . -l 3000",
+    "test": "node tests/puzzle.test.js && node tests/heuristics.test.js && node tests/gbfs.test.js"
+  },
+  "keywords": [
+    "8-puzzle",
+    "artificial-intelligence",
+    "gbfs"
+  ],
+  "author": "Student 24BCI0212",
+  "license": "MIT"
+}

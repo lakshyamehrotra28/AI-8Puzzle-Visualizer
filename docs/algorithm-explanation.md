@@ -279,3 +279,7 @@ For any non-blank tile t that is misplaced, its distance |r - r_goal| + |c - c_g
 
 ### Consistency (Monotonicity) Proof
 A heuristic h is consistent if h(n) <= c(n, a, n') + h(n'). In the 8-puzzle, c(n, a, n') = 1. A single tile move changes Manhattan distance by +1, -1, or 0. Thus |h2(n) - h2(n')| <= 1 = c(n, a, n').
+
+
+#### Viva Q1: What is the total size of the 8-puzzle state space?
+Answer: 9! = 362,880 total configurations, partitioned into two disjoint equivalence classes of 181,440 states each.

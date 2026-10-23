@@ -229,3 +229,6 @@ Space: Play/Pause | ArrowRight: Next Step | ArrowLeft: Previous Step | R: Reset.
 
 ### Mobile Support
 Fully responsive on iOS and Android devices with touch-friendly controls.
+
+### Admissibility Guarantee
+Both h1 and h2 strictly satisfy h(n) <= h*(n).

@@ -155,3 +155,5 @@ node tests/gbfs.test.js
 ```
 
 All 64 tests execute in under 200 milliseconds and require zero external dependencies.
+
+- Spec: Board must contain exactly 9 integer elements.

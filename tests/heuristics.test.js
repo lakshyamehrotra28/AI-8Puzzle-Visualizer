@@ -253,6 +253,57 @@ test('h2: non-standard goal state supported', () => {
   assert(result >= 0, `h2 must be non-negative, got ${result}`);
 });
 
+test('heuristics consistency: triangle inequality |h(n) - h(n\')| <= 1 holds across transitions', () => {
+  // Since step cost c(n, a, n\') = 1, any valid move can change h1 and h2 by at most 1
+  let state = [1, 2, 3, 4, 0, 5, 7, 8, 6];
+  for (let step = 0; step < 50; step++) {
+    const blankIdx = state.indexOf(BLANK_TILE);
+    const r = Math.floor(blankIdx / BOARD_SIZE);
+    const c = blankIdx % BOARD_SIZE;
+    const moves = [[-1,0],[1,0],[0,-1],[0,1]];
+    for (const [dr, dc] of moves) {
+      const nr = r + dr;
+      const nc = c + dc;
+      if (nr >= 0 && nr < BOARD_SIZE && nc >= 0 && nc < BOARD_SIZE) {
+        const next = [...state];
+        const swapIdx = nr * BOARD_SIZE + nc;
+        next[blankIdx] = next[swapIdx];
+        next[swapIdx] = BLANK_TILE;
+        
+        const h1_orig = misplacedTiles(state, STANDARD_GOAL);
+        const h1_next = misplacedTiles(next, STANDARD_GOAL);
+        assert(Math.abs(h1_orig - h1_next) <= 1, `h1 consistency violated: ${h1_orig} -> ${h1_next}`);
+
+        const h2_orig = manhattanDistance(state, STANDARD_GOAL);
+        const h2_next = manhattanDistance(next, STANDARD_GOAL);
+        assert(Math.abs(h2_orig - h2_next) <= 1, `h2 consistency violated: ${h2_orig} -> ${h2_next}`);
+      }
+    }
+    // Random step
+    const validMoves = moves.filter(([dr, dc]) => {
+      const nr = r + dr, nc = c + dc;
+      return nr >= 0 && nr < BOARD_SIZE && nc >= 0 && nc < BOARD_SIZE;
+    });
+    const [dr, dc] = validMoves[Math.floor(Math.random() * validMoves.length)];
+    const swapIdx = (r + dr) * BOARD_SIZE + (c + dc);
+    state[blankIdx] = state[swapIdx];
+    state[swapIdx] = BLANK_TILE;
+  }
+});
+
+test('heuristics: empirical dominance h2(n) >= h1(n) across 100 random boards', () => {
+  for (let k = 0; k < 100; k++) {
+    const arr = [0, 1, 2, 3, 4, 5, 6, 7, 8];
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    const h1 = misplacedTiles(arr, STANDARD_GOAL);
+    const h2 = manhattanDistance(arr, STANDARD_GOAL);
+    assert(h2 >= h1, `Dominance failed: h2 (${h2}) < h1 (${h1}) on board ${JSON.stringify(arr)}`);
+  }
+});
+
 // ══════════════════════════════════════════════════════════════
 // RESULTS SUMMARY
 // ══════════════════════════════════════════════════════════════

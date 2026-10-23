@@ -401,3 +401,5 @@ export default {
   calculateEffectiveBranchingFactor,
   exportMarkdownReport,
 };
+
+/** JSDoc: Statistics calculation contracts */
